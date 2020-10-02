@@ -2,25 +2,22 @@ package lt.ktu.zalciai;
 
 import lt.ktu.zalciai.controls.InputActionListener;
 import lt.ktu.zalciai.controls.UserInputKeyboard;
+import lt.ktu.zalciai.display.DisplayContract;
+import lt.ktu.zalciai.display.DisplayJPanel;
 import lt.ktu.zalciai.enums.ControlAction;
 import lt.ktu.zalciai.enums.Direction;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Point;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
 import java.util.Random;
-import javax.swing.JFrame;
 import javax.swing.Timer;
 
 public class Snake implements ActionListener, InputActionListener {
 
     public static final int SCALE = 10;
-    public JFrame jframe;
-    public RenderPanel renderPanel;
     public Timer timer = new Timer(20, this);
     public LinkedList<Point> sParts = new LinkedList<Point>();
 
@@ -32,21 +29,11 @@ public class Snake implements ActionListener, InputActionListener {
     public Random random;
 
     public Point head, headII, cherry;
+    private final DisplayContract.View view;
 
-    public Dimension dim;
 
     public Snake() {
-
-        dim = Toolkit.getDefaultToolkit().getScreenSize();
-        jframe = new JFrame("Snake");
-        jframe.setTitle("Snake žaidimas");
-        jframe.setVisible(true);
-        jframe.setSize(805, 700);
-        jframe.setLocation(dim.width / 2 - jframe.getWidth() / 2, dim.height / 2 - jframe.getHeight() / 2);
-        jframe.add(renderPanel = new RenderPanel());
-        jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        jframe.addKeyListener(new UserInputKeyboard(this));
-        jframe.setResizable(false);
+        view = new DisplayJPanel(new UserInputKeyboard(this));
         startGame();
     }
 
@@ -77,7 +64,7 @@ public class Snake implements ActionListener, InputActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         ticks++;
-        renderPanel.repaint();
+        view.refresh();
         //First snake actions
         if (ticks % 4 == 0 && head != null && over != true && !paused) {
             time++;
