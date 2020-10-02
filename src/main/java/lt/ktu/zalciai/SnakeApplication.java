@@ -16,7 +16,6 @@ import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
-import java.util.Random;
 import javax.swing.Timer;
 
 public class SnakeApplication implements ActionListener, InputActionListener {
@@ -67,20 +66,20 @@ public class SnakeApplication implements ActionListener, InputActionListener {
         if (direction == Direction.UP) {
             head = new Point(head.x, head.y - 1);
         }
-        if (direction == Direction.DOWN) {
+        else if (direction == Direction.DOWN) {
             head = new Point(head.x, head.y + 1);
         }
-        if (direction == Direction.LEFT) {
+        else if (direction == Direction.LEFT) {
             head = new Point(head.x - 1, head.y);
         }
-        if (direction == Direction.RIGHT) {
+        else if (direction == Direction.RIGHT) {
             head = new Point(head.x + 1, head.y);
         }
 
         if (snake.contains(head) || snakeMap.colides(head)) {
             over = true;
+            return;
         }
-
         if (snake.size() > tailLength) {
             snake.remove();
         }
