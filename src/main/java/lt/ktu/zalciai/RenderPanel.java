@@ -27,11 +27,11 @@ public class RenderPanel extends JPanel {
         super.paintComponent(g); //To change body of generated methods, choose Tools | Templates.
         g.setColor(Color.ORANGE);
         g.fillRect(0, 0, 800, 700);
-        Snake snake = Snake.snake;
+        SnakeApplication snake = SnakeApplication.snakeApp;
 
         g.setColor(Color.MAGENTA);
-        for (int i = 0; i < snake.sParts.size(); i++) {
-            g.fillRect(snake.sParts.get(i).x * SCALE, snake.sParts.get(i).y * SCALE,
+        for (int i = 0; i < snake.snake.size(); i++) {
+            g.fillRect(snake.snake.get(i).x * SCALE, snake.snake.get(i).y * SCALE,
                     SCALE, SCALE);
         }
         g.fillRect(snake.head.x * SCALE, snake.head.y * SCALE,
@@ -44,9 +44,9 @@ public class RenderPanel extends JPanel {
             snake.eaten = 0;
         }
         g.setColor(cherry);
-        g.fillRect(snake.cherry.x * SCALE, snake.cherry.y * SCALE,
+        g.fillRect(snake.food.x * SCALE, snake.food.y * SCALE,
                 SCALE, SCALE);
-        String string = "First snake ----- Score : " + snake.score + ", Time: " + snake.time / 20;
+        String string = "First snake ----- Score : " + snake.score;
         g.setColor(Color.black);
         Font scores = new Font("Verdana", Font.BOLD, 10);
         g.setFont(scores);
