@@ -5,16 +5,31 @@
  */
 package lt.ktu.zalciai;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
+import java.awt.*;
 import javax.swing.JPanel;
 import java.util.Random;
+import java.util.Set;
 
 public class RenderPanel extends JPanel {
 
     public Color cherry;
-    private final static int SCALE = 10;
+
+    private final Set<Point> walls;
+    private final int height;
+    private final int width;
+    private final int scale;
+
+    public RenderPanel(
+            int height,
+            int width,
+            int scale,
+            Set<Point> walls
+    ) {
+        this.height = height;
+        this.width = width;
+        this.scale = scale;
+        this.walls = walls;
+    }
 
     @Override
     protected void paintComponent(Graphics g) {
@@ -26,16 +41,14 @@ public class RenderPanel extends JPanel {
 
         super.paintComponent(g); //To change body of generated methods, choose Tools | Templates.
         g.setColor(Color.ORANGE);
-        g.fillRect(0, 0, 800, 700);
+        g.fillRect(0, 0, width * scale, height * scale);
         SnakeApplication snake = SnakeApplication.snakeApp;
 
         g.setColor(Color.MAGENTA);
         for (int i = 0; i < snake.snake.size(); i++) {
-            g.fillRect(snake.snake.get(i).x * SCALE, snake.snake.get(i).y * SCALE,
-                    SCALE, SCALE);
+            g.fillRect(snake.snake.get(i).x * scale, snake.snake.get(i).y * scale, scale, scale);
         }
-        g.fillRect(snake.head.x * SCALE, snake.head.y * SCALE,
-                SCALE, SCALE);
+        g.fillRect(snake.head.x * scale, snake.head.y * scale, scale, scale);
 
         g.setColor(Color.BLUE);
         if (snake.eaten == 1) {
@@ -44,22 +57,17 @@ public class RenderPanel extends JPanel {
             snake.eaten = 0;
         }
         g.setColor(cherry);
-        g.fillRect(snake.food.x * SCALE, snake.food.y * SCALE,
-                SCALE, SCALE);
-        String string = "First snake ----- Score : " + snake.score;
-        g.setColor(Color.black);
-        Font scores = new Font("Verdana", Font.BOLD, 10);
-        g.setFont(scores);
-        g.drawString(string, 5, 10);
+        g.fillRect(snake.food.x * scale, snake.food.y * scale, scale, scale);
         if (snake.over) {
             g.setColor(Color.BLUE);
             Font font = new Font("Verdana", Font.BOLD, 20);
             g.setFont(font);
             if (snake.over) {
                 String over = "First snake Lost the game (press space to restart)";
-                g.drawString(over, (getWidth() / 2 - over.length() - 200), getHeight() / 2);
+                g.drawString(over, (g.getClipBounds().width / 2 - g.getFontMetrics().stringWidth(over) / 2), getHeight() / 2);
             }
         }
+        g.setColor(Color.BLACK);
+        walls.forEach(point -> g.fillRect(point.x * 10, point.y * 10, 10, 10));
     }
-
 }

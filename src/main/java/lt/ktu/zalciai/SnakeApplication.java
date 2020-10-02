@@ -6,6 +6,8 @@ import lt.ktu.zalciai.display.DisplayContract;
 import lt.ktu.zalciai.display.DisplayJPanel;
 import lt.ktu.zalciai.enums.ControlAction;
 import lt.ktu.zalciai.enums.Direction;
+import lt.ktu.zalciai.snakemap.SnakeMap;
+import lt.ktu.zalciai.snakemap.SnakeMapDefault;
 
 import java.awt.Color;
 import java.awt.Point;
@@ -31,10 +33,14 @@ public class SnakeApplication implements ActionListener, InputActionListener {
 
     public Point head, food;
     private final DisplayContract.View view;
-
+    private final SnakeMap snakeMap;
 
     public SnakeApplication() {
-        view = new DisplayJPanel(new UserInputKeyboard(this));
+        snakeMap = new SnakeMapDefault(80, 80);
+        view = new DisplayJPanel(
+                new UserInputKeyboard(this),
+                snakeMap.getWalls()
+        );
         startGame();
     }
 
@@ -45,14 +51,10 @@ public class SnakeApplication implements ActionListener, InputActionListener {
         paused = false;
         tailLength = 0;
         snake.clear();
-        head = new Point(0, 0);
+        head = new Point(10, 10);
         random = new Random();
         food = new Point(random.nextInt(79), random.nextInt(66));
         timer.start();
-    }
-
-    private boolean notContain(Point point, List<Point> points) {
-        return !points.contains(point);
     }
 
     @Override
@@ -63,32 +65,20 @@ public class SnakeApplication implements ActionListener, InputActionListener {
         snake.add(new Point(head.x, head.y));
 
         if (direction == Direction.UP) {
-            if (head.y - 1 >= 0 && notContain(new Point(head.x, head.y - 1), snake)) {
-                head = new Point(head.x, head.y - 1);
-            } else {
-                over = true;
-            }
+            head = new Point(head.x, head.y - 1);
         }
         if (direction == Direction.DOWN) {
-            if (head.y + 1 < 67 && notContain(new Point(head.x, head.y + 1), snake)) {
-                head = new Point(head.x, head.y + 1);
-            } else {
-                over = true;
-            }
+            head = new Point(head.x, head.y + 1);
         }
         if (direction == Direction.LEFT) {
-            if (head.x - 1 >= 0 && notContain(new Point(head.x - 1, head.y), snake)) {
-                head = new Point(head.x - 1, head.y);
-            } else {
-                over = true;
-            }
+            head = new Point(head.x - 1, head.y);
         }
         if (direction == Direction.RIGHT) {
-            if (head.x + 1 < 79 && notContain(new Point(head.x + 1, head.y), snake)) {
-                head = new Point(head.x + 1, head.y);
-            } else {
-                over = true;
-            }
+            head = new Point(head.x + 1, head.y);
+        }
+
+        if(snake.contains(head) || snakeMap.colides(head)) {
+            over = true;
         }
 
         if (snake.size() > tailLength) {
