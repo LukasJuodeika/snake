@@ -12,12 +12,12 @@ import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 import javax.swing.Timer;
 
 public class Snake implements ActionListener, InputActionListener {
 
-    public static final int SCALE = 10;
     public Timer timer = new Timer(20, this);
     public LinkedList<Point> sParts = new LinkedList<Point>();
 
@@ -28,7 +28,7 @@ public class Snake implements ActionListener, InputActionListener {
     public Color colorGet;
     public Random random;
 
-    public Point head, headII, cherry;
+    public Point head, cherry;
     private final DisplayContract.View view;
 
 
@@ -46,19 +46,13 @@ public class Snake implements ActionListener, InputActionListener {
         tailLength = 0;
         sParts.clear();
         head = new Point(0, 0);
-        headII = new Point(79, 66);
         random = new Random();
         cherry = new Point(random.nextInt(79), random.nextInt(66));
         timer.start();
     }
 
-    public boolean noTailAtFirst(int x, int y) {
-        for (Point point : sParts) {
-            if (point.equals(new Point(x, y))) {
-                return false;
-            }
-        }
-        return true;
+    private boolean notContain(Point point, List<Point> points) {
+        return !points.contains(point);
     }
 
     @Override
@@ -66,33 +60,33 @@ public class Snake implements ActionListener, InputActionListener {
         ticks++;
         view.refresh();
         //First snake actions
-        if (ticks % 4 == 0 && head != null && over != true && !paused) {
+        if (ticks % 4 == 0 && head != null && !over && !paused) {
             time++;
             //sParts.insert(new Point(head.x, head.y));
             sParts.add(new Point(head.x, head.y));
             if (direction == Direction.UP) {
-                if (head.y - 1 >= 0 && noTailAtFirst(head.x, head.y - 1)) {
+                if (head.y - 1 >= 0 && notContain(new Point(head.x, head.y - 1), sParts)) {
                     head = new Point(head.x, head.y - 1);
                 } else {
                     over = true;
                 }
             }
             if (direction == Direction.DOWN) {
-                if (head.y + 1 < 67 && noTailAtFirst(head.x, head.y + 1)) {
+                if (head.y + 1 < 67 && notContain(new Point(head.x, head.y + 1), sParts)) {
                     head = new Point(head.x, head.y + 1);
                 } else {
                     over = true;
                 }
             }
             if (direction == Direction.LEFT) {
-                if (head.x - 1 >= 0 && noTailAtFirst(head.x - 1, head.y)) {
+                if (head.x - 1 >= 0 && notContain(new Point(head.x - 1, head.y), sParts)) {
                     head = new Point(head.x - 1, head.y);
                 } else {
                     over = true;
                 }
             }
             if (direction == Direction.RIGHT) {
-                if (head.x + 1 < 79 && noTailAtFirst(head.x + 1, head.y)) {
+                if (head.x + 1 < 79 && notContain(new Point(head.x + 1, head.y), sParts)) {
                     head = new Point(head.x + 1, head.y);
                 } else {
                     over = true;
@@ -132,7 +126,7 @@ public class Snake implements ActionListener, InputActionListener {
 
     @Override
     public void onDirectionAction(Direction direction) {
-        if(!direction.isOpposite(this.direction)) {
+        if (!direction.isOpposite(this.direction)) {
             this.direction = direction;
         }
     }

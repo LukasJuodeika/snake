@@ -14,6 +14,7 @@ import java.util.Random;
 public class RenderPanel extends JPanel {
 
     public Color cherry;
+    private final static int SCALE = 10;
 
     @Override
     protected void paintComponent(Graphics g) {
@@ -30,11 +31,11 @@ public class RenderPanel extends JPanel {
 
         g.setColor(Color.MAGENTA);
         for (int i = 0; i < snake.sParts.size(); i++) {
-            g.fillRect(snake.sParts.get(i).x * Snake.SCALE, snake.sParts.get(i).y * Snake.SCALE,
-                    Snake.SCALE, Snake.SCALE);
+            g.fillRect(snake.sParts.get(i).x * SCALE, snake.sParts.get(i).y * SCALE,
+                    SCALE, SCALE);
         }
-        g.fillRect(snake.head.x * Snake.SCALE, snake.head.y * Snake.SCALE,
-                Snake.SCALE, Snake.SCALE);
+        g.fillRect(snake.head.x * SCALE, snake.head.y * SCALE,
+                SCALE, SCALE);
 
         g.setColor(Color.BLUE);
         if (snake.eaten == 1) {
@@ -43,8 +44,8 @@ public class RenderPanel extends JPanel {
             snake.eaten = 0;
         }
         g.setColor(cherry);
-        g.fillRect(snake.cherry.x * Snake.SCALE, snake.cherry.y * Snake.SCALE,
-                Snake.SCALE, Snake.SCALE);
+        g.fillRect(snake.cherry.x * SCALE, snake.cherry.y * SCALE,
+                SCALE, SCALE);
         String string = "First snake ----- Score : " + snake.score + ", Time: " + snake.time / 20;
         g.setColor(Color.black);
         Font scores = new Font("Verdana", Font.BOLD, 10);
