@@ -6,6 +6,8 @@ import lt.ktu.zalciai.display.DisplayContract;
 import lt.ktu.zalciai.display.DisplayJPanel;
 import lt.ktu.zalciai.enums.ControlAction;
 import lt.ktu.zalciai.enums.Direction;
+import lt.ktu.zalciai.food.Food;
+import lt.ktu.zalciai.food.FoodFactory;
 import lt.ktu.zalciai.snakemap.SnakeMap;
 import lt.ktu.zalciai.snakemap.SnakeMapDefault;
 
@@ -14,7 +16,6 @@ import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Random;
 import javax.swing.Timer;
 
@@ -25,18 +26,18 @@ public class SnakeApplication implements ActionListener, InputActionListener {
     public LinkedList<Point> snake = new LinkedList<>();
 
     public static SnakeApplication snakeApp;
-    public int tailLength, score, eaten;
+    public int tailLength, score;
     private Direction direction = Direction.DOWN;
     public boolean over = false, paused;
     public Color colorGet;
-    public Random random;
 
-    public Point head, food;
+    public Point head;
+    public Food food;
     private final DisplayContract.View view;
     private final SnakeMap snakeMap;
 
     public SnakeApplication() {
-        snakeMap = new SnakeMapDefault(80, 80);
+        snakeMap = new SnakeMapDefault(Constants.SNAKE_GRID_WIDTH, Constants.SNAKE_GRID_HEIGHT);
         view = new DisplayJPanel(
                 new UserInputKeyboard(this),
                 snakeMap.getWalls()
@@ -51,9 +52,8 @@ public class SnakeApplication implements ActionListener, InputActionListener {
         paused = false;
         tailLength = 0;
         snake.clear();
-        head = new Point(10, 10);
-        random = new Random();
-        food = new Point(random.nextInt(79), random.nextInt(66));
+        head = new Point(Constants.SNAKE_GRID_SCALE, Constants.SNAKE_GRID_SCALE);
+        food = FoodFactory.getInstance().randomFood();
         timer.start();
     }
 
@@ -77,18 +77,17 @@ public class SnakeApplication implements ActionListener, InputActionListener {
             head = new Point(head.x + 1, head.y);
         }
 
-        if(snake.contains(head) || snakeMap.colides(head)) {
+        if (snake.contains(head) || snakeMap.colides(head)) {
             over = true;
         }
 
         if (snake.size() > tailLength) {
             snake.remove();
         }
-        if (head.equals(food)) {
-            score += 5;
+        if (head.equals(food.getPoint())) {
+            score += food.getScore();
             tailLength += 1;
-            food.setLocation(random.nextInt(79), random.nextInt(66));
-            eaten = 1;
+            food = FoodFactory.getInstance().randomFood();
         }
     }
 

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package lt.ktu.zalciai;
 
 import java.awt.*;
@@ -51,13 +46,10 @@ public class RenderPanel extends JPanel {
         g.fillRect(snake.head.x * scale, snake.head.y * scale, scale, scale);
 
         g.setColor(Color.BLUE);
-        if (snake.eaten == 1) {
-            cherry = randomColor;
-            snake.colorGet = cherry;
-            snake.eaten = 0;
-        }
+        cherry = randomColor;
+        snake.colorGet = cherry;
         g.setColor(cherry);
-        g.fillRect(snake.food.x * scale, snake.food.y * scale, scale, scale);
+        g.fillRect(snake.food.getPoint().x * scale, snake.food.getPoint().y * scale, scale, scale);
         if (snake.over) {
             g.setColor(Color.BLUE);
             Font font = new Font("Verdana", Font.BOLD, 20);
@@ -68,6 +60,11 @@ public class RenderPanel extends JPanel {
             }
         }
         g.setColor(Color.BLACK);
-        walls.forEach(point -> g.fillRect(point.x * 10, point.y * 10, 10, 10));
+        walls.forEach(point -> g.fillRect(
+                point.x * Constants.SNAKE_GRID_SCALE,
+                point.y * Constants.SNAKE_GRID_SCALE,
+                Constants.SNAKE_GRID_SCALE,
+                Constants.SNAKE_GRID_SCALE
+        ));
     }
 }
