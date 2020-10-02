@@ -1,9 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package lt.ktu.zalciai;
+
+import lt.ktu.zalciai.controls.InputActionListener;
+import lt.ktu.zalciai.controls.UserInputKeyboard;
+import lt.ktu.zalciai.enums.ControlAction;
+import lt.ktu.zalciai.enums.Direction;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -11,23 +11,22 @@ import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.LinkedList;
 import java.util.Random;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 
-public class Snake implements ActionListener, KeyListener {
+public class Snake implements ActionListener, InputActionListener {
 
+    public static final int SCALE = 10;
     public JFrame jframe;
     public RenderPanel renderPanel;
     public Timer timer = new Timer(20, this);
     public LinkedList<Point> sParts = new LinkedList<Point>();
 
-    public static final int UP = 0, DOWN = 1, LEFT = 2, RIGHT = 3, SCALE = 10;
     public static Snake snake;
-    public int ticks = 0, tailLength, direction = DOWN, score, time, eaten;
+    public int ticks = 0, tailLength, score, time, eaten;
+    private Direction direction = Direction.DOWN;
     public boolean over = false, paused;
     public Color colorGet;
     public Random random;
@@ -46,7 +45,7 @@ public class Snake implements ActionListener, KeyListener {
         jframe.setLocation(dim.width / 2 - jframe.getWidth() / 2, dim.height / 2 - jframe.getHeight() / 2);
         jframe.add(renderPanel = new RenderPanel());
         jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        jframe.addKeyListener(this);
+        jframe.addKeyListener(new UserInputKeyboard(this));
         jframe.setResizable(false);
         startGame();
     }
@@ -54,7 +53,7 @@ public class Snake implements ActionListener, KeyListener {
     public void startGame() {
         over = false;
         score = 0;
-        direction = DOWN;
+        direction = Direction.DOWN;
         paused = false;
         time = 0;
         tailLength = 0;
@@ -84,28 +83,28 @@ public class Snake implements ActionListener, KeyListener {
             time++;
             //sParts.insert(new Point(head.x, head.y));
             sParts.add(new Point(head.x, head.y));
-            if (direction == UP) {
+            if (direction == Direction.UP) {
                 if (head.y - 1 >= 0 && noTailAtFirst(head.x, head.y - 1)) {
                     head = new Point(head.x, head.y - 1);
                 } else {
                     over = true;
                 }
             }
-            if (direction == DOWN) {
+            if (direction == Direction.DOWN) {
                 if (head.y + 1 < 67 && noTailAtFirst(head.x, head.y + 1)) {
                     head = new Point(head.x, head.y + 1);
                 } else {
                     over = true;
                 }
             }
-            if (direction == LEFT) {
+            if (direction == Direction.LEFT) {
                 if (head.x - 1 >= 0 && noTailAtFirst(head.x - 1, head.y)) {
                     head = new Point(head.x - 1, head.y);
                 } else {
                     over = true;
                 }
             }
-            if (direction == RIGHT) {
+            if (direction == Direction.RIGHT) {
                 if (head.x + 1 < 79 && noTailAtFirst(head.x + 1, head.y)) {
                     head = new Point(head.x + 1, head.y);
                 } else {
@@ -131,37 +130,23 @@ public class Snake implements ActionListener, KeyListener {
     }
 
     @Override
-    public void keyTyped(KeyEvent e) {
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        int i = e.getKeyCode();
-        //First snake control
-        if (i == KeyEvent.VK_W && direction != DOWN) {
-            direction = UP;
-        }
-        if (i == KeyEvent.VK_S && direction != UP) {
-            direction = DOWN;
-        }
-        if (i == KeyEvent.VK_D && direction != LEFT) {
-            direction = RIGHT;
-        }
-        if (i == KeyEvent.VK_A && direction != RIGHT) {
-            direction = LEFT;
-        }
-
-        if (i == KeyEvent.VK_SPACE) {
-            if (over) {
-                startGame();
-            } else {
-                paused = !paused;
+    public void onControlAction(ControlAction controlAction) {
+        switch (controlAction) {
+            case PAUSE: {
+                if (over) {
+                    startGame();
+                } else {
+                    paused = !paused;
+                }
             }
+            break;
         }
     }
 
     @Override
-    public void keyReleased(KeyEvent e) {
+    public void onDirectionAction(Direction direction) {
+        if(!direction.isOpposite(this.direction)) {
+            this.direction = direction;
+        }
     }
-
 }
