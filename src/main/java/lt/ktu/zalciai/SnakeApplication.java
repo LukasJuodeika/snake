@@ -30,7 +30,6 @@ public class SnakeApplication implements ActionListener, InputActionListener {
     public boolean over = false, paused;
     public Color colorGet;
 
-    public Point head;
     public Food food;
     private final DisplayContract.View view;
     private final SnakeMap snakeMap;
@@ -51,43 +50,50 @@ public class SnakeApplication implements ActionListener, InputActionListener {
         paused = false;
         tailLength = 0;
         snake.clear();
-        head = new Point(Constants.SNAKE_GRID_SCALE, Constants.SNAKE_GRID_SCALE);
+        snake.add(new Point(Constants.SNAKE_GRID_SCALE, Constants.SNAKE_GRID_SCALE));
         food = FoodFactory.getInstance().randomFood();
         timer.start();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        view.refresh();
+        Point head = snake.getLast();
         if (paused || over)
             return;
-        snake.add(new Point(head.x, head.y));
+        Point next = createNextHead(direction, head);
 
-        if (direction == Direction.UP) {
-            head = new Point(head.x, head.y - 1);
-        }
-        else if (direction == Direction.DOWN) {
-            head = new Point(head.x, head.y + 1);
-        }
-        else if (direction == Direction.LEFT) {
-            head = new Point(head.x - 1, head.y);
-        }
-        else if (direction == Direction.RIGHT) {
-            head = new Point(head.x + 1, head.y);
-        }
-
-        if (snake.contains(head) || snakeMap.colides(head)) {
+        if (snake.contains(next) || snakeMap.colides(next)) {
             over = true;
-            return;
         }
         if (snake.size() > tailLength) {
             snake.remove();
         }
-        if (head.equals(food.getPoint())) {
+        if (next.equals(food.getPoint())) {
             score += food.getScore();
             tailLength += 1;
             food = FoodFactory.getInstance().randomFood();
         }
+        snake.add(next);
+        view.refresh();
+    }
+
+    public Point createNextHead(Direction direction, Point head) {
+        Point next;
+        switch (direction) {
+            case UP:
+                next = new Point(head.x, head.y - 1);
+                break;
+            case DOWN:
+                next = new Point(head.x, head.y + 1);
+                break;
+            case LEFT:
+                next = new Point(head.x - 1, head.y);
+                break;
+            default: //RIGHT
+                next = new Point(head.x + 1, head.y);
+                break;
+        }
+        return next;
     }
 
     public static void main(String[] args) {

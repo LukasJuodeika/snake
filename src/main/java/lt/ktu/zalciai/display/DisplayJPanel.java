@@ -1,7 +1,7 @@
 package lt.ktu.zalciai.display;
 
 import lt.ktu.zalciai.Constants;
-import lt.ktu.zalciai.RenderPanel;
+import lt.ktu.zalciai.snakegrid.RenderPanel;
 
 import javax.swing.*;
 import java.awt.*;
