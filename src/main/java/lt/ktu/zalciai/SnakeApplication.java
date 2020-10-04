@@ -6,8 +6,8 @@ import lt.ktu.zalciai.display.DisplayContract;
 import lt.ktu.zalciai.display.DisplayJPanel;
 import lt.ktu.zalciai.enums.ControlAction;
 import lt.ktu.zalciai.enums.Direction;
-import lt.ktu.zalciai.food.Food;
 import lt.ktu.zalciai.food.FoodFactory;
+import lt.ktu.zalciai.food.entities.Food;
 import lt.ktu.zalciai.snakegrid.SnakeGridContract;
 import lt.ktu.zalciai.snakemap.SnakeMap;
 import lt.ktu.zalciai.snakemap.SnakeMapDefault;
@@ -25,8 +25,6 @@ public class SnakeApplication implements ActionListener, InputActionListener, Sn
     private final int FRAME_INTERVAL = 80;
     public Timer timer = new Timer(FRAME_INTERVAL, this);
     public LinkedList<Point> snake = new LinkedList<>();
-
-    public static SnakeApplication snakeApp;
     public int tailLength, score;
     private Direction direction = Direction.DOWN;
     public boolean over = false, paused;
@@ -34,14 +32,15 @@ public class SnakeApplication implements ActionListener, InputActionListener, Sn
     public Food food;
     private final DisplayContract.View view;
     private final SnakeMap snakeMap;
+    private final FoodFactory foodFactory;
 
-    public SnakeApplication() {
+    public SnakeApplication(FoodFactory foodFactory) {
+        this.foodFactory = foodFactory;
         snakeMap = new SnakeMapDefault(Constants.SNAKE_GRID_WIDTH, Constants.SNAKE_GRID_HEIGHT);
         view = new DisplayJPanel(
                 new UserInputKeyboard(this),
                 this
         );
-        startGame();
     }
 
     public void startGame() {
@@ -52,7 +51,7 @@ public class SnakeApplication implements ActionListener, InputActionListener, Sn
         tailLength = 0;
         snake.clear();
         snake.add(new Point(Constants.SNAKE_GRID_SCALE, Constants.SNAKE_GRID_SCALE));
-        food = FoodFactory.getInstance().randomFood();
+        food = foodFactory.generateFood();
         timer.start();
     }
 
@@ -72,7 +71,7 @@ public class SnakeApplication implements ActionListener, InputActionListener, Sn
         if (next.equals(food.getPoint())) {
             score += food.getScore();
             tailLength += 1;
-            food = FoodFactory.getInstance().randomFood();
+            food = foodFactory.generateFood();
             System.out.println("Score: " + score);
         }
         snake.add(next);
@@ -96,10 +95,6 @@ public class SnakeApplication implements ActionListener, InputActionListener, Sn
                 break;
         }
         return next;
-    }
-
-    public static void main(String[] args) {
-        snakeApp = new SnakeApplication();
     }
 
     @Override

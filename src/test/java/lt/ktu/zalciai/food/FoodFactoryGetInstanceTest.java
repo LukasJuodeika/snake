@@ -10,14 +10,14 @@ public class FoodFactoryGetInstanceTest {
 
     @Test
     public void singleThread() {
-        Assertions.assertThat(FoodFactory.getInstance()).isEqualTo(FoodFactory.getInstance());
+        Assertions.assertThat(FoodFactoryRandom.getInstance()).isEqualTo(FoodFactoryRandom.getInstance());
     }
 
     @Test
     public void twoRunnables() throws InterruptedException {
         Set<String> classNames = new HashSet<>();
-        Thread thread1 = new Thread(() -> classNames.add(FoodFactory.getInstance().toString()));
-        Thread thread2 = new Thread(() -> classNames.add(FoodFactory.getInstance().toString()));
+        Thread thread1 = new Thread(() -> classNames.add(FoodFactoryRandom.getInstance().toString()));
+        Thread thread2 = new Thread(() -> classNames.add(FoodFactoryRandom.getInstance().toString()));
         thread1.start();
         thread2.start();
         thread1.join();
@@ -30,8 +30,8 @@ public class FoodFactoryGetInstanceTest {
     @Test
     public void fiveRunnables() throws InterruptedException {
         Set<String> classNames = new HashSet<>();
-        Thread thread1 = new Thread(() -> classNames.add(FoodFactory.getInstance().toString()));
-        Thread thread2 = new Thread(() -> classNames.add(FoodFactory.getInstance().toString()));
+        Thread thread1 = new Thread(() -> classNames.add(FoodFactoryRandom.getInstance().toString()));
+        Thread thread2 = new Thread(() -> classNames.add(FoodFactoryRandom.getInstance().toString()));
         thread1.start();
         thread2.start();
         thread1.join();

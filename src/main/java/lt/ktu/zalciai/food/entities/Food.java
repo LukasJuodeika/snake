@@ -1,4 +1,4 @@
-package lt.ktu.zalciai.food;
+package lt.ktu.zalciai.food.entities;
 
 import java.awt.*;
 
