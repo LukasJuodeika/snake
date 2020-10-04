@@ -23,13 +23,25 @@ public final class FoodFactory {
     }
 
     public Food randomFood() {
-        return new FoodBasic(
-                new Point(
-                        random.nextInt(Constants.SNAKE_GRID_WIDTH - 1),
-                        random.nextInt(Constants.SNAKE_GRID_HEIGHT - 1)
-                )
+        int classNumber = random.nextInt(3);
+        Food randomFood;
+        Point randomPoint = new Point(
+                random.nextInt(Constants.SNAKE_GRID_WIDTH - 1),
+                random.nextInt(Constants.SNAKE_GRID_HEIGHT - 1)
         );
 
+        switch (classNumber) {
+            case 0:
+                randomFood = new FoodL1(randomPoint);
+                break;
+            case 1:
+                randomFood = new FoodL2(randomPoint);
+                break;
+            default:
+                randomFood = new FoodBasic(randomPoint);
+                break;
+        }
+        return randomFood;
     }
 
 }

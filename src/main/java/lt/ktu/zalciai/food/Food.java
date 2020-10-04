@@ -17,4 +17,8 @@ public abstract class Food {
     public int getScore() {
         return 5;
     }
+
+    public String getColorHex() {
+        return "#7CFC00";
+    }
 }

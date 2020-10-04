@@ -73,6 +73,7 @@ public class SnakeApplication implements ActionListener, InputActionListener, Sn
             score += food.getScore();
             tailLength += 1;
             food = FoodFactory.getInstance().randomFood();
+            System.out.println("Score: " + score);
         }
         snake.add(next);
         view.refresh();
@@ -130,7 +131,7 @@ public class SnakeApplication implements ActionListener, InputActionListener, Sn
         addToColorPoints(colorPoints, "#FF00FF", snake);
 
         //draw food
-        addToColorPoints(colorPoints, "#FF00FF", Collections.singletonList(food.getPoint()));
+        addToColorPoints(colorPoints, food.getColorHex(), Collections.singletonList(food.getPoint()));
 
         //draw walls
         addToColorPoints(colorPoints, "#000", snakeMap.getWalls());
