@@ -1,31 +1,27 @@
 package lt.ktu.zalciai.snakegrid;
 
-import lt.ktu.zalciai.SnakeApplication;
-
 import java.awt.*;
 import javax.swing.JPanel;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Map;
-import java.util.Set;
 
-public class RenderPanel extends JPanel {
+public class SnakeGridView extends JPanel {
 
-    private final Set<Point> walls;
     private final int height;
     private final int width;
     private final int scale;
+    private final SnakeGridContract.Controller controller;
 
-    public RenderPanel(
+    public SnakeGridView(
             int height,
             int width,
             int scale,
-            Set<Point> walls
+            SnakeGridContract.Controller controller
     ) {
         this.height = height;
         this.width = width;
         this.scale = scale;
-        this.walls = walls;
+        this.controller = controller;
     }
 
     @Override
@@ -34,16 +30,8 @@ public class RenderPanel extends JPanel {
         g.setColor(Color.ORANGE);
         g.fillRect(0, 0, width * scale, height * scale);
 
-        SnakeApplication snake = SnakeApplication.snakeApp;
-
-        //draw snake
-        drawColorPoints(g, Map.of("#FF00FF", snake.snake));
-
-        //draw food
-        drawColorPoints(g, Map.of("#FFF", Collections.singletonList(snake.food.getPoint())));
-
-        //draw walls
-        drawColorPoints(g, Map.of("#000", walls));
+        //draw everything
+        drawColorPoints(g, controller.generateDrawPoints());
     }
 
     private void drawColorPoints(Graphics graphics, Map<String, Collection<Point>> colorPoints) {

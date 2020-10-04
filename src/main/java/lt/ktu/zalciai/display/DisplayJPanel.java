@@ -1,24 +1,24 @@
 package lt.ktu.zalciai.display;
 
 import lt.ktu.zalciai.Constants;
-import lt.ktu.zalciai.snakegrid.RenderPanel;
+import lt.ktu.zalciai.snakegrid.SnakeGridView;
+import lt.ktu.zalciai.snakegrid.SnakeGridContract;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyListener;
-import java.util.Set;
 
 public class DisplayJPanel implements DisplayContract.View {
 
     private final JFrame jframe;
-    private final RenderPanel renderPanel;
+    private final SnakeGridView renderPanel;
     private final Dimension dim;
 
     public DisplayJPanel(
             KeyListener keyListener,
-            Set<Point> walls
+            SnakeGridContract.Controller controller
     ) {
-        renderPanel = new RenderPanel(Constants.SNAKE_GRID_HEIGHT, Constants.SNAKE_GRID_WIDTH, Constants.SNAKE_GRID_SCALE, walls);
+        renderPanel = new SnakeGridView(Constants.SNAKE_GRID_HEIGHT, Constants.SNAKE_GRID_WIDTH, Constants.SNAKE_GRID_SCALE, controller);
         dim = Toolkit.getDefaultToolkit().getScreenSize();
         jframe = new JFrame("Snake");
         jframe.setTitle("Žalčio žaidimas");
