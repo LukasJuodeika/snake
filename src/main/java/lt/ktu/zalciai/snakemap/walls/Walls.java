@@ -3,6 +3,7 @@ package lt.ktu.zalciai.snakemap.walls;
 import java.awt.*;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -34,5 +35,17 @@ public class Walls {
         hashSet.addAll(left);
         hashSet.addAll(right);
         return hashSet;
+    }
+
+    public static Set<Point> generateFillRect(Point topLeft, Point bottomRight) {
+        return Stream.iterate(topLeft.x, n -> ++n)
+                .limit(bottomRight.x - topLeft.x)
+                .map(x ->
+                        Stream.iterate(topLeft.y, n1 -> ++n1)
+                                .limit(bottomRight.y - topLeft.y)
+                                .map(y -> new Point(x, y))
+                )
+                .flatMap(Function.identity())
+                .collect(Collectors.toSet());
     }
 }

@@ -10,7 +10,6 @@ import lt.ktu.zalciai.food.FoodFactory;
 import lt.ktu.zalciai.food.entities.Food;
 import lt.ktu.zalciai.snakegrid.SnakeGridContract;
 import lt.ktu.zalciai.snakemap.SnakeMap;
-import lt.ktu.zalciai.snakemap.SnakeMapDefault;
 
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -34,9 +33,12 @@ public class SnakeApplication implements ActionListener, InputActionListener, Sn
     private final SnakeMap snakeMap;
     private final FoodFactory foodFactory;
 
-    public SnakeApplication(FoodFactory foodFactory) {
+    public SnakeApplication(
+            FoodFactory foodFactory,
+            SnakeMap snakeMap
+    ) {
         this.foodFactory = foodFactory;
-        snakeMap = new SnakeMapDefault(Constants.SNAKE_GRID_WIDTH, Constants.SNAKE_GRID_HEIGHT);
+        this.snakeMap = snakeMap;
         view = new DisplayJPanel(
                 new UserInputKeyboard(this),
                 this
