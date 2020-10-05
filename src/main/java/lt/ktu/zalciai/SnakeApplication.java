@@ -10,6 +10,7 @@ import lt.ktu.zalciai.food.FoodFactory;
 import lt.ktu.zalciai.food.entities.Food;
 import lt.ktu.zalciai.snakegrid.SnakeGridContract;
 import lt.ktu.zalciai.snakemap.SnakeMap;
+import lt.ktu.zalciai.ws.EmptyClient;
 
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -18,6 +19,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.swing.Timer;
+
+import org.java_websocket.client.WebSocketClient;
 
 public class SnakeApplication implements ActionListener, InputActionListener, SnakeGridContract.Controller {
 
@@ -33,12 +36,16 @@ public class SnakeApplication implements ActionListener, InputActionListener, Sn
     private final SnakeMap snakeMap;
     private final FoodFactory foodFactory;
 
+    private final EmptyClient client;
+
     public SnakeApplication(
             FoodFactory foodFactory,
-            SnakeMap snakeMap
+            SnakeMap snakeMap,
+            EmptyClient client
     ) {
         this.foodFactory = foodFactory;
         this.snakeMap = snakeMap;
+        this.client = client;
         view = new DisplayJPanel(
                 new UserInputKeyboard(this),
                 this
@@ -77,6 +84,7 @@ public class SnakeApplication implements ActionListener, InputActionListener, Sn
             System.out.println("Score: " + score);
         }
         snake.add(next);
+        client.sendPoints(Collections.singletonMap("#ff0000", snake));
         view.refresh();
     }
 
@@ -133,6 +141,11 @@ public class SnakeApplication implements ActionListener, InputActionListener, Sn
         //draw walls
         addToColorPoints(colorPoints, "#000", snakeMap.getWalls());
 
+        //draw remote
+        for (Map.Entry<String, Collection<Point>> entry : client.remoteColorPoints.entrySet()) {
+            addToColorPoints(colorPoints, entry.getKey(), entry.getValue());
+        }
+        
         return colorPoints;
     }
 
