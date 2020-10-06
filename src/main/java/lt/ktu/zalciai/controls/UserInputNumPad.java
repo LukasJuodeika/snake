@@ -6,11 +6,11 @@ import lt.ktu.zalciai.enums.Direction;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class UserInputKeyboard implements KeyListener {
+public class UserInputNumPad implements KeyListener {
 
     private final InputActionListener inputActionListener;
 
-    public UserInputKeyboard(InputActionListener inputActionListener) {
+    public UserInputNumPad(InputActionListener inputActionListener) {
         this.inputActionListener = inputActionListener;
     }
 
@@ -21,16 +21,16 @@ public class UserInputKeyboard implements KeyListener {
     public void keyPressed(KeyEvent e) {
         int i = e.getKeyCode();
         switch (i) {
-            case KeyEvent.VK_W:
+            case KeyEvent.VK_KP_UP:
                 inputActionListener.onDirectionAction(Direction.UP);
                 break;
-            case KeyEvent.VK_S:
+            case KeyEvent.VK_KP_DOWN:
                 inputActionListener.onDirectionAction(Direction.DOWN);
                 break;
-            case KeyEvent.VK_D:
+            case KeyEvent.VK_KP_RIGHT:
                 inputActionListener.onDirectionAction(Direction.RIGHT);
                 break;
-            case KeyEvent.VK_A:
+            case KeyEvent.VK_KP_LEFT:
                 inputActionListener.onDirectionAction(Direction.LEFT);
                 break;
             case KeyEvent.VK_SPACE:

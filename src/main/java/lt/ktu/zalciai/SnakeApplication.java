@@ -1,7 +1,7 @@
 package lt.ktu.zalciai;
 
 import lt.ktu.zalciai.controls.InputActionListener;
-import lt.ktu.zalciai.controls.UserInputKeyboard;
+import lt.ktu.zalciai.controls.UserInputWASD;
 import lt.ktu.zalciai.display.DisplayContract;
 import lt.ktu.zalciai.display.DisplayJPanel;
 import lt.ktu.zalciai.enums.ControlAction;
@@ -40,7 +40,7 @@ public class SnakeApplication implements ActionListener, InputActionListener, Sn
         this.foodFactory = foodFactory;
         this.snakeMap = snakeMap;
         view = new DisplayJPanel(
-                new UserInputKeyboard(this),
+                new UserInputWASD(this),
                 this
         );
     }
