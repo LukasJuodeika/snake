@@ -18,7 +18,12 @@ public class DisplayJPanel implements DisplayContract.View {
             KeyListener keyListener,
             SnakeGridContract.Controller controller
     ) {
-        renderPanel = new SnakeGridView(Constants.SNAKE_GRID_HEIGHT, Constants.SNAKE_GRID_WIDTH, Constants.SNAKE_GRID_SCALE, controller);
+        renderPanel = new SnakeGridView.Builder(controller)
+                .setHeight(Constants.SNAKE_GRID_HEIGHT)
+                .setWidth(Constants.SNAKE_GRID_WIDTH)
+                .setScale(Constants.SNAKE_GRID_SCALE)
+                .build();
+
         dim = Toolkit.getDefaultToolkit().getScreenSize();
         jframe = new JFrame("Snake");
         jframe.setTitle("Žalčio žaidimas");

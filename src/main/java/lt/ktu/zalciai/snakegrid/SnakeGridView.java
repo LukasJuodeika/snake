@@ -12,7 +12,7 @@ public class SnakeGridView extends JPanel {
     private final int scale;
     private final SnakeGridContract.Controller controller;
 
-    public SnakeGridView(
+    private SnakeGridView(
             int height,
             int width,
             int scale,
@@ -48,5 +48,38 @@ public class SnakeGridView extends JPanel {
                 scale,
                 scale
         ));
+    }
+
+    public static class Builder {
+        private int height;
+        private int width;
+        private int scale;
+        private SnakeGridContract.Controller controller;
+
+        public Builder(SnakeGridContract.Controller controller) {
+            this.controller = controller;
+            height = 40;
+            width = 40;
+            scale = 8;
+        }
+
+        public Builder setHeight(int height) {
+            this.height = height;
+            return this;
+        }
+
+        public Builder setWidth(int width) {
+            this.width = width;
+            return this;
+        }
+
+        public Builder setScale(int scale) {
+            this.scale = scale;
+            return this;
+        }
+
+        public SnakeGridView build() {
+            return new SnakeGridView(height, width, scale, controller);
+        }
     }
 }
