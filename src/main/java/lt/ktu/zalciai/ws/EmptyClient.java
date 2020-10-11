@@ -1,15 +1,28 @@
 package lt.ktu.zalciai.ws;
 
+import lt.ktu.zalciai.food.FoodFactory;
+import lt.ktu.zalciai.food.FoodFactoryRandom;
+import lt.ktu.zalciai.snakemap.SnakeMapFactory;
+import lt.ktu.zalciai.snakemap.SnakeMap;
+import lt.ktu.zalciai.*;
+
+import java.util.*;
+import java.awt.Point;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.ByteBuffer;
 
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.drafts.Draft;
-import org.java_websocket.drafts.Draft_6455;
 import org.java_websocket.handshake.ServerHandshake;
 
 public class EmptyClient extends WebSocketClient {
+
+	public Map<String, Collection<Point>> remoteColorPoints = Collections.emptyMap();
 
 	public EmptyClient(URI serverUri, Draft draft) {
 		super(serverUri, draft);
@@ -32,7 +45,8 @@ public class EmptyClient extends WebSocketClient {
 
 	@Override
 	public void onMessage(String message) {
-		System.out.println("received message: " + message);
+		// System.out.println("received message: " + message);
+		remoteColorPoints = decodePoints(message);
 	}
 
 	@Override
@@ -45,8 +59,28 @@ public class EmptyClient extends WebSocketClient {
 		System.err.println("an error occurred:" + ex);
 	}
 
+	public void sendPoints(Map<String, Collection<Point>> points) {
+		send(encodePoints(points));
+	}
+
+	private String encodePoints(Map<String, Collection<Point>> points) {
+		String json = new Gson().toJson(points);
+		return json;
+	}
+
+	private Map<String, Collection<Point>> decodePoints(String json) {
+		Map<String, Collection<Point>> points = new Gson().fromJson(json
+			, new TypeToken<Map<String, Collection<Point>>>() {}.getType());
+		return points;
+	}
+
 	public static void main(String[] args) throws URISyntaxException {		
-		WebSocketClient client = new EmptyClient(new URI("ws://localhost:8887"));
+		EmptyClient client = new EmptyClient(new URI("ws://localhost:8887"));
 		client.connect();
+
+		FoodFactory foodFactory = FoodFactoryRandom.getInstance();
+        SnakeMap snakeMap = SnakeMapFactory.createCustomSidesMap(Constants.SNAKE_GRID_WIDTH, Constants.SNAKE_GRID_HEIGHT);
+        SnakeApplication snakeApplication = new SnakeApplication(foodFactory, snakeMap, client);
+        snakeApplication.startGame();
 	}
 }
