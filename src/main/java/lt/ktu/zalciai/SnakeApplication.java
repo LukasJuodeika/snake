@@ -10,7 +10,7 @@ import lt.ktu.zalciai.food.FoodFactory;
 import lt.ktu.zalciai.food.entities.Food;
 import lt.ktu.zalciai.snakegrid.SnakeGridContract;
 import lt.ktu.zalciai.snakemap.SnakeMap;
-import lt.ktu.zalciai.ws.EmptyClient;
+import lt.ktu.zalciai.ws.SnakeClient;
 
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -19,8 +19,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.swing.Timer;
-
-import org.java_websocket.client.WebSocketClient;
 
 public class SnakeApplication implements ActionListener, InputActionListener, SnakeGridContract.Controller {
 
@@ -36,12 +34,12 @@ public class SnakeApplication implements ActionListener, InputActionListener, Sn
     private final SnakeMap snakeMap;
     private final FoodFactory foodFactory;
 
-    private final EmptyClient client;
+    private final SnakeClient client;
 
     public SnakeApplication(
             FoodFactory foodFactory,
             SnakeMap snakeMap,
-            EmptyClient client
+            SnakeClient client
     ) {
         this.foodFactory = foodFactory;
         this.snakeMap = snakeMap;
