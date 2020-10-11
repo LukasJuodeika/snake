@@ -6,6 +6,7 @@ import lt.ktu.zalciai.display.DisplayContract;
 import lt.ktu.zalciai.display.DisplayJPanel;
 import lt.ktu.zalciai.enums.ControlAction;
 import lt.ktu.zalciai.enums.Direction;
+import lt.ktu.zalciai.exceptions.CollisionException;
 import lt.ktu.zalciai.food.FoodFactory;
 import lt.ktu.zalciai.food.entities.Food;
 import lt.ktu.zalciai.snakegrid.SnakeGridContract;
@@ -23,11 +24,10 @@ import javax.swing.Timer;
 public class SnakeApplication implements ActionListener, InputActionListener, SnakeGridContract.Controller {
 
     private final int FRAME_INTERVAL = 80;
-    public Timer timer = new Timer(FRAME_INTERVAL, this);
-    public LinkedList<Point> snake = new LinkedList<>();
-    public int tailLength, score;
+    private Timer timer = new Timer(FRAME_INTERVAL, this);
+    private Snake snake = new Snake();
     private Direction direction = Direction.DOWN;
-    public boolean over = false, paused;
+    private boolean over = false, paused;
 
     public Food food;
     private final DisplayContract.View view;
@@ -52,57 +52,31 @@ public class SnakeApplication implements ActionListener, InputActionListener, Sn
 
     public void startGame() {
         over = false;
-        score = 0;
         direction = Direction.DOWN;
         paused = false;
-        tailLength = 0;
-        snake.clear();
-        snake.add(new Point(Constants.SNAKE_GRID_SCALE, Constants.SNAKE_GRID_SCALE));
+        snake.start(15, 15);
         food = foodFactory.generateFood();
         timer.start();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Point head = snake.getLast();
         if (paused || over)
             return;
-        Point next = createNextHead(direction, head);
-
-        if (snake.contains(next) || snakeMap.colides(next)) {
+        Point newHead;
+        try {
+            newHead = snake.move(direction, snakeMap::colides);
+        } catch (CollisionException exception) {
+            System.out.println(exception);
             over = true;
+            return;
         }
-        if (snake.size() > tailLength) {
-            snake.remove();
-        }
-        if (next.equals(food.getPoint())) {
-            score += food.getScore();
-            tailLength += 1;
+        if (newHead.equals(food.getPoint())) {
+            snake.eatFood(food);
             food = foodFactory.generateFood();
-            System.out.println("Score: " + score);
         }
-        snake.add(next);
-        client.sendPoints(Collections.singletonMap("#ff0000", snake));
+        client.sendPoints(Collections.singletonMap("#ff0000", snake.getPoints()));
         view.refresh();
-    }
-
-    public Point createNextHead(Direction direction, Point head) {
-        Point next;
-        switch (direction) {
-            case UP:
-                next = new Point(head.x, head.y - 1);
-                break;
-            case DOWN:
-                next = new Point(head.x, head.y + 1);
-                break;
-            case LEFT:
-                next = new Point(head.x - 1, head.y);
-                break;
-            default: //RIGHT
-                next = new Point(head.x + 1, head.y);
-                break;
-        }
-        return next;
     }
 
     @Override
@@ -131,7 +105,7 @@ public class SnakeApplication implements ActionListener, InputActionListener, Sn
         Map<String, Collection<Point>> colorPoints = new HashMap<>();
 
         //draw snake
-        addToColorPoints(colorPoints, "#FF00FF", snake);
+        addToColorPoints(colorPoints, "#FF00FF", snake.getPoints());
 
         //draw food
         addToColorPoints(colorPoints, food.getColorHex(), Collections.singletonList(food.getPoint()));
