@@ -15,7 +15,7 @@ import java.net.URISyntaxException;
 
 public class SnakeClient extends LoggingClient {
 
-	public Map<String, Collection<Point>> remoteColorPoints = Collections.emptyMap();
+	public Map<String, Set<Point>> remoteColorPoints = Collections.emptyMap();
 
 	public SnakeClient(URI serverURI) {
 		super(serverURI);

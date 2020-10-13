@@ -54,8 +54,8 @@ public class LoggingClient extends WebSocketClient {
         return json;
     }
 
-    protected Map<String, Collection<Point>> decodePoints(String json) {
-        Map<String, Collection<Point>> points = new Gson().fromJson(json, new TypeToken<Map<String, Collection<Point>>>() {}.getType());
+    protected Map<String, Set<Point>> decodePoints(String json) {
+        Map<String, Set<Point>> points = new Gson().fromJson(json, new TypeToken<Map<String, HashSet<Point>>>() {}.getType());
         return points;
     }
 }

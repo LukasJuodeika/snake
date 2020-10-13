@@ -4,14 +4,17 @@ import lt.ktu.zalciai.enums.Direction;
 import lt.ktu.zalciai.exceptions.CollisionException;
 import lt.ktu.zalciai.food.entities.Food;
 
+import java.util.Map;
 import java.awt.*;
 import java.util.LinkedList;
+import java.util.Set;
 import java.util.function.Predicate;
 
 public class Snake {
     private final LinkedList<Point> snake = new LinkedList<>();
     private int tailLength = 2;
     private int score = 0;
+    private CollisionStrategy collisionStrategy;
 
     public void start(int startX, int startY) {
         snake.clear();
@@ -20,13 +23,13 @@ public class Snake {
         snake.add(new Point(startX, startY));
     }
 
-    public Point move(Direction direction, Predicate<Point> collides) throws CollisionException {
+    public Point move(Direction direction, Predicate<Point> collides, Map<String, Set<Point>> remotePoints) throws CollisionException {
         Point head = snake.getLast();
         Point next = createNextHead(direction, head);
         if (snake.size() > tailLength) {
             snake.remove();
         }
-        if (snake.contains(next) || collides.test(next)) {
+        if (snake.contains(next) || collisionStrategy.colides(next, collides, remotePoints)) {
             throw new CollisionException();
         }
         snake.add(next);
@@ -60,5 +63,9 @@ public class Snake {
 
     public LinkedList<Point> getPoints() {
         return snake;
+    }
+
+    public void setCollisionStrategy(CollisionStrategy collisionStrategy) {
+        this.collisionStrategy = collisionStrategy;
     }
 }

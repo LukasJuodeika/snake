@@ -54,6 +54,7 @@ public class SnakeApplication implements ActionListener, InputActionListener, Sn
         over = false;
         direction = Direction.DOWN;
         paused = false;
+        snake.setCollisionStrategy(CollisionStrategy.invulnerableStrategy());
         snake.start(15, 15);
         food = foodFactory.generateFood();
         timer.start();
@@ -65,7 +66,7 @@ public class SnakeApplication implements ActionListener, InputActionListener, Sn
             return;
         Point newHead;
         try {
-            newHead = snake.move(direction, snakeMap::colides);
+            newHead = snake.move(direction, snakeMap::colides, client.remoteColorPoints);
         } catch (CollisionException exception) {
             System.out.println(exception);
             over = true;
@@ -114,7 +115,7 @@ public class SnakeApplication implements ActionListener, InputActionListener, Sn
         addToColorPoints(colorPoints, "#000", snakeMap.getWalls());
 
         //draw remote
-        for (Map.Entry<String, Collection<Point>> entry : client.remoteColorPoints.entrySet()) {
+        for (Map.Entry<String, Set<Point>> entry : client.remoteColorPoints.entrySet()) {
             addToColorPoints(colorPoints, entry.getKey(), entry.getValue());
         }
         
