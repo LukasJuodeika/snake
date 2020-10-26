@@ -3,26 +3,26 @@ package lt.ktu.zalciai.food;
 import lt.ktu.zalciai.Constants;
 import lt.ktu.zalciai.food.entities.Food;
 import lt.ktu.zalciai.food.entities.FoodBasic;
+import lt.ktu.zalciai.food.entities.Powerup;
 import lt.ktu.zalciai.food.entities.FoodL1;
-import lt.ktu.zalciai.food.entities.FoodL2;
 
 import java.awt.*;
 import java.util.Random;
 
-public final class FoodFactoryRandom implements FoodFactory{
+public class FoodFactoryModern implements FoodFactory {
 
-    private static FoodFactoryRandom foodFactory;
+    private static FoodFactoryModern foodFactory;
 
     private final Random random;
 
-    public static synchronized FoodFactoryRandom getInstance() {
+    public static synchronized FoodFactoryModern getInstance() {
         if (foodFactory == null) {
-            foodFactory = new FoodFactoryRandom();
+            foodFactory = new FoodFactoryModern();
         }
         return foodFactory;
     }
 
-    private FoodFactoryRandom() {
+    private FoodFactoryModern() {
         random = new Random();
     }
 
@@ -40,7 +40,7 @@ public final class FoodFactoryRandom implements FoodFactory{
                 randomFood = new FoodL1(randomPoint);
                 break;
             case 1:
-                randomFood = new FoodL2(randomPoint);
+                randomFood = new Powerup(randomPoint);
                 break;
             default:
                 randomFood = new FoodBasic(randomPoint);
@@ -48,5 +48,4 @@ public final class FoodFactoryRandom implements FoodFactory{
         }
         return randomFood;
     }
-
 }

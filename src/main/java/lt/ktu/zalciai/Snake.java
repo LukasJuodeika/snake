@@ -3,6 +3,7 @@ package lt.ktu.zalciai;
 import lt.ktu.zalciai.enums.Direction;
 import lt.ktu.zalciai.exceptions.CollisionException;
 import lt.ktu.zalciai.food.entities.Food;
+import lt.ktu.zalciai.collision.CollisionStrategy;
 
 import java.util.Map;
 import java.awt.*;
@@ -37,6 +38,7 @@ public class Snake {
     }
 
     public void eatFood(Food food) {
+        collisionStrategy = food.getStrategy();
         score += food.getScore();
         tailLength++;
         System.out.println("Score: " + score);

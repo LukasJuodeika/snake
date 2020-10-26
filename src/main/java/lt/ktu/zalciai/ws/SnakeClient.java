@@ -1,7 +1,8 @@
 package lt.ktu.zalciai.ws;
 
 import lt.ktu.zalciai.food.FoodFactory;
-import lt.ktu.zalciai.food.FoodFactoryRandom;
+import lt.ktu.zalciai.food.FoodFactoryClassic;
+import lt.ktu.zalciai.food.FoodFactoryModern;
 import lt.ktu.zalciai.snakemap.SnakeMapFactory;
 import lt.ktu.zalciai.snakemap.SnakeMap;
 import lt.ktu.zalciai.*;
@@ -34,7 +35,7 @@ public class SnakeClient extends LoggingClient {
 		SnakeClient client = new SnakeClient(new URI("ws://localhost:8887"));
 		client.connect();
 
-		FoodFactory foodFactory = FoodFactoryRandom.getInstance();
+		FoodFactory foodFactory = FoodFactoryModern.getInstance();
         SnakeMap snakeMap = SnakeMapFactory.createCustomSidesMap(Constants.SNAKE_GRID_WIDTH, Constants.SNAKE_GRID_HEIGHT);
         SnakeApplication snakeApplication = new SnakeApplication(foodFactory, snakeMap, client);
         snakeApplication.startGame();

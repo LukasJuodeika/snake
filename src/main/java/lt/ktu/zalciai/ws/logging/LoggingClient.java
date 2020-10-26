@@ -1,7 +1,7 @@
 package lt.ktu.zalciai.ws.logging;
 
 import lt.ktu.zalciai.food.FoodFactory;
-import lt.ktu.zalciai.food.FoodFactoryRandom;
+import lt.ktu.zalciai.food.FoodFactoryClassic;
 import lt.ktu.zalciai.snakemap.SnakeMapFactory;
 import lt.ktu.zalciai.snakemap.SnakeMap;
 import lt.ktu.zalciai.*;

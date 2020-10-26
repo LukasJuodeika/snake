@@ -12,6 +12,8 @@ import lt.ktu.zalciai.food.entities.Food;
 import lt.ktu.zalciai.snakegrid.SnakeGridContract;
 import lt.ktu.zalciai.snakemap.SnakeMap;
 import lt.ktu.zalciai.ws.SnakeClient;
+import lt.ktu.zalciai.collision.CollisionStrategy;
+
 
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -54,7 +56,7 @@ public class SnakeApplication implements ActionListener, InputActionListener, Sn
         over = false;
         direction = Direction.DOWN;
         paused = false;
-        snake.setCollisionStrategy(CollisionStrategy.invulnerableStrategy());
+        snake.setCollisionStrategy(CollisionStrategy.normalStrategy());
         snake.start(15, 15);
         food = foodFactory.generateFood();
         timer.start();

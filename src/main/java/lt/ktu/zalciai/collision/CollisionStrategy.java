@@ -1,11 +1,11 @@
-package lt.ktu.zalciai;
+package lt.ktu.zalciai.collision;
 
 import java.awt.Point;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Predicate;
 
-interface CollisionStrategy {
+public interface CollisionStrategy {
     boolean colides(Point point, Predicate<Point> mapCollision, Map<String, Set<Point>> remotePoints);
   
     static CollisionStrategy normalStrategy() {
