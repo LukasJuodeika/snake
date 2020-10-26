@@ -10,6 +10,7 @@ import lt.ktu.zalciai.exceptions.CollisionException;
 import lt.ktu.zalciai.food.FoodFactory;
 import lt.ktu.zalciai.food.entities.Food;
 import lt.ktu.zalciai.snakegrid.SnakeGridContract;
+import lt.ktu.zalciai.snakemap.SnakeClientToSnakeMapAdapter;
 import lt.ktu.zalciai.snakemap.SnakeMap;
 import lt.ktu.zalciai.ws.SnakeClient;
 import lt.ktu.zalciai.collision.CollisionStrategy;
@@ -37,6 +38,7 @@ public class SnakeApplication implements ActionListener, InputActionListener, Sn
     private final FoodFactory foodFactory;
 
     private final SnakeClient client;
+    private final SnakeMap remoteMap;
 
     public SnakeApplication(
             FoodFactory foodFactory,
@@ -46,6 +48,7 @@ public class SnakeApplication implements ActionListener, InputActionListener, Sn
         this.foodFactory = foodFactory;
         this.snakeMap = snakeMap;
         this.client = client;
+        this.remoteMap = new SnakeClientToSnakeMapAdapter(client);
         view = new DisplayJPanel(
                 new UserInputWASD(this),
                 this
@@ -68,7 +71,7 @@ public class SnakeApplication implements ActionListener, InputActionListener, Sn
             return;
         Point newHead;
         try {
-            newHead = snake.move(direction, snakeMap::colides, client.remoteColorPoints);
+            newHead = snake.move(direction, snakeMap::colides, remoteMap::colides);
         } catch (CollisionException exception) {
             System.out.println(exception);
             over = true;

@@ -24,13 +24,13 @@ public class Snake {
         snake.add(new Point(startX, startY));
     }
 
-    public Point move(Direction direction, Predicate<Point> collides, Map<String, Set<Point>> remotePoints) throws CollisionException {
+    public Point move(Direction direction, Predicate<Point> collides, Predicate<Point> collidesRemote) throws CollisionException {
         Point head = snake.getLast();
         Point next = createNextHead(direction, head);
         if (snake.size() > tailLength) {
             snake.remove();
         }
-        if (snake.contains(next) || collisionStrategy.colides(next, collides, remotePoints)) {
+        if (snake.contains(next) || collisionStrategy.colides(next, collides, collidesRemote)) {
             throw new CollisionException();
         }
         snake.add(next);
