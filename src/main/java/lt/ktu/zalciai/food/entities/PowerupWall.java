@@ -4,11 +4,11 @@ import lt.ktu.zalciai.collision.CollisionStrategy;
 
 import java.awt.*;
 
-public class Powerup extends Food {
+public class PowerupWall extends Food {
 
-    public Powerup(Point point) {
+    public PowerupWall(Point point) {
         super(point);
-        this.strategy = CollisionStrategy.invulnerableStrategy();
+        this.strategy = CollisionStrategy.ignoreWallStrategy();
     }
 
     @Override
@@ -18,6 +18,6 @@ public class Powerup extends Food {
 
     @Override
     public String getColorHex() {
-        return "#0000AA";
+        return "#00AA00";
     }
 }

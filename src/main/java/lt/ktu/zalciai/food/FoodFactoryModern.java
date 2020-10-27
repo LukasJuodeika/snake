@@ -3,7 +3,8 @@ package lt.ktu.zalciai.food;
 import lt.ktu.zalciai.Constants;
 import lt.ktu.zalciai.food.entities.Food;
 import lt.ktu.zalciai.food.entities.FoodBasic;
-import lt.ktu.zalciai.food.entities.Powerup;
+import lt.ktu.zalciai.food.entities.PowerupEnemy;
+import lt.ktu.zalciai.food.entities.PowerupWall;
 import lt.ktu.zalciai.food.entities.FoodL1;
 
 import java.awt.*;
@@ -37,10 +38,10 @@ public class FoodFactoryModern implements FoodFactory {
 
         switch (classNumber) {
             case 0:
-                randomFood = new FoodL1(randomPoint);
+                randomFood = new PowerupWall(randomPoint);
                 break;
             case 1:
-                randomFood = new Powerup(randomPoint);
+                randomFood = new PowerupEnemy(randomPoint);
                 break;
             default:
                 randomFood = new FoodBasic(randomPoint);
