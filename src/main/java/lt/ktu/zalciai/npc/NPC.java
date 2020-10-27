@@ -3,11 +3,13 @@ package lt.ktu.zalciai.npc;
 import java.util.Collection;
 import java.awt.*;
 
-public abstract class NPC {
+public interface NPC {
 
-    public abstract NPC copy(); 
+    public NPC copy(); 
     
-    public abstract void performAction();
+    public void performAction();
 
-    public abstract Collection<Point> getBodyPoints();
+    public void move(Point delta);
+
+    public Collection<Point> getBodyPoints();
 }

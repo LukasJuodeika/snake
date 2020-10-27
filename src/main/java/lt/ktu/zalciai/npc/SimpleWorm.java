@@ -6,11 +6,11 @@ import java.util.Collection;
 
 import lt.ktu.zalciai.Constants;
 
-public class WallWorm extends NPC {
+public class SimpleWorm implements NPC {
 
     private ArrayList<Point> body;
 
-    public WallWorm(int size) {
+    public SimpleWorm(int size) {
         body = new ArrayList<Point>();
         for (int i = 0; i < size; i++) {
             body.add(new Point(0, size - i));
@@ -36,16 +36,14 @@ public class WallWorm extends NPC {
         }
     }
 
-    @Override
     public void performAction() {
         this.move(new Point(0, 1));
     }
 
-    @Override
     public NPC copy() {
-        WallWorm wallWormClone = new WallWorm(this.getSize());
+        SimpleWorm wallWormClone = new SimpleWorm(this.getSize());
         wallWormClone.move(this.getHeadPosition());
         wallWormClone.move(new Point(0, this.getSize() * -1));
-        return wallWormClone;
+        return (NPC) wallWormClone;
     }
 }
