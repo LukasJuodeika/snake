@@ -1,10 +1,10 @@
 package lt.ktu.zalciai.snakemap;
 
 import java.awt.*;
-import java.util.Set;
+import java.util.Collection;
 
 public interface SnakeMap {
     boolean colides(Point point);
 
-    Set<Point> getWalls();
+    Collection<Point> getWalls();
 }

@@ -9,6 +9,8 @@ import lt.ktu.zalciai.enums.Direction;
 import lt.ktu.zalciai.exceptions.CollisionException;
 import lt.ktu.zalciai.food.FoodFactory;
 import lt.ktu.zalciai.food.entities.Food;
+import lt.ktu.zalciai.npc.NPC;
+import lt.ktu.zalciai.npc.NonPlayerCharacters;
 import lt.ktu.zalciai.snakegrid.SnakeGridContract;
 import lt.ktu.zalciai.snakemap.SnakeClientToSnakeMapAdapter;
 import lt.ktu.zalciai.snakemap.SnakeMap;
@@ -39,6 +41,7 @@ public class SnakeApplication implements ActionListener, InputActionListener, Sn
 
     private final SnakeClient client;
     private final SnakeMap remoteMap;
+    private final NonPlayerCharacters nonPlayerCharacters;
 
     public SnakeApplication(
             FoodFactory foodFactory,
@@ -49,6 +52,7 @@ public class SnakeApplication implements ActionListener, InputActionListener, Sn
         this.snakeMap = snakeMap;
         this.client = client;
         this.remoteMap = new SnakeClientToSnakeMapAdapter(client);
+        this.nonPlayerCharacters = new NonPlayerCharacters();
         view = new DisplayJPanel(
                 new UserInputWASD(this),
                 this
@@ -81,6 +85,7 @@ public class SnakeApplication implements ActionListener, InputActionListener, Sn
             snake.eatFood(food);
             food = foodFactory.generateFood();
         }
+        nonPlayerCharacters.performAction();
         client.sendPoints(Collections.singletonMap("#ff0000", snake.getPoints()));
         view.refresh();
     }
@@ -118,6 +123,11 @@ public class SnakeApplication implements ActionListener, InputActionListener, Sn
 
         //draw walls
         addToColorPoints(colorPoints, "#000", snakeMap.getWalls());
+
+        //draw NPCs
+        for (NPC npc : nonPlayerCharacters.getNPCs()) {
+            addToColorPoints(colorPoints, "#000", npc.getBodyPoints());
+        }
 
         //draw remote
         for (Map.Entry<String, Set<Point>> entry : client.remoteColorPoints.entrySet()) {
