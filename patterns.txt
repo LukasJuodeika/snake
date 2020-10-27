@@ -1,0 +1,15 @@
+a. Singleton – pademonstruoti “thread safe” (FoodFactoryClassic, FoodFactoryModern)
+b. Factory – šeimoje ne mažiau kaip 3 klasės (FoodFactoryClassic, FoodFactoryModern)
+c. Abstract Factory – ne mažiau kaip 2 real factory, kiekvienoje šeimoje ne mažiau kaip 3 klasės (FoodFactory)
+d. Strategy – ne mažiau 4 strategijos klasių. (CollisionStrategy)
+e. Observer – pademonstruoti veikimą per sekų diagram. (SnakeServer)
+f. Builder – ne mažiau 2 “konkrečių builderių” (concrete builder). (SnakeMapDefault)
+g. Adapter – Adapter ir Adaptee turi skirtingus metodų kiekius. (SnakeClientToSnakeMapAdapter)
+h. Prototype – Palyginkite deep ir shallow kopijų sukūrimą, mokėti gynimo metu pakeisti realizaciją, (NPC)
+ataskaitoje pateikite rezultatus - atminties adresus,
+i. Decorator – nemažiau 3 dekoravimo lygių, (NPCDecorator)
+
+j. Command – prie komandų turi būti undo() galimybė,
+k. Façade – ne mažiau 2 “client” klasių ir nemažiau 3 “subsystem” klasių.
+l. Bridge – ne mažiau 2 abstrakcijų ir nemažiau 2 konkrečių realizacijų, paaiškinti skirtumą su Strategy ir
+Adapter šablonais.
