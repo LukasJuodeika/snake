@@ -63,7 +63,7 @@ public class SnakeApplication implements ActionListener, InputActionListener, Sn
         over = false;
         direction = Direction.DOWN;
         paused = false;
-        snake.setCollisionStrategy(CollisionStrategy.normalStrategy());
+        snake.setCollisionStrategy(CollisionStrategy.normal());
         snake.start(15, 15);
         food = foodFactory.generateFood();
         timer.start();

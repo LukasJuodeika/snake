@@ -12,7 +12,7 @@ public abstract class Food {
 
     public Food(Point point) {
         this.point = point;
-        strategy = CollisionStrategy.normalStrategy();
+        strategy = CollisionStrategy.normal();
     }
 
     public Point getPoint() {

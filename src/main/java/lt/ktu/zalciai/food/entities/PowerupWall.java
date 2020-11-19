@@ -8,7 +8,7 @@ public class PowerupWall extends Food {
 
     public PowerupWall(Point point) {
         super(point);
-        this.strategy = CollisionStrategy.ignoreWallStrategy();
+        this.strategy = CollisionStrategy.ignoreWall();
     }
 
     @Override

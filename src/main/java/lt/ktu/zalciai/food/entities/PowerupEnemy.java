@@ -8,7 +8,7 @@ public class PowerupEnemy extends Food {
 
     public PowerupEnemy(Point point) {
         super(point);
-        this.strategy = CollisionStrategy.ignoreEnemyStrategy();
+        this.strategy = CollisionStrategy.ignoreEnemy();
     }
 
     @Override
