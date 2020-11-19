@@ -1,37 +1,36 @@
 package lt.ktu.zalciai.controls;
 
-
 import lt.ktu.zalciai.enums.ControlAction;
 import lt.ktu.zalciai.enums.Direction;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
 import java.awt.event.KeyEvent;
-
 import static org.mockito.Mockito.*;
 
-public class UserInputArrowsTest {
+
+public class UserInplutNumPadTest {
+
     @Mock
     public KeyEvent keyEvent;
 
     @Mock
     public InputActionListener inputActionListener;
 
-    private UserInputArrows userInputArrows;
+    private UserInputNumPad userInputNumPad;
 
     @Before
     public void setup() {
         MockitoAnnotations.openMocks(this);
-        userInputArrows = new UserInputArrows(inputActionListener);
+        userInputNumPad = new UserInputNumPad(inputActionListener);
     }
 
     @Test
     public void pressedUp() {
-        doReturn(KeyEvent.VK_UP).when(keyEvent).getKeyCode();
+        doReturn(KeyEvent.VK_KP_UP).when(keyEvent).getKeyCode();
 
-        userInputArrows.keyPressed(keyEvent);
+        userInputNumPad.keyPressed(keyEvent);
 
         verify(inputActionListener).onDirectionAction(Direction.UP);
         verify(inputActionListener, never()).onDirectionAction(Direction.DOWN);
@@ -42,9 +41,9 @@ public class UserInputArrowsTest {
 
     @Test
     public void pressedDown() {
-        doReturn(KeyEvent.VK_DOWN).when(keyEvent).getKeyCode();
+        doReturn(KeyEvent.VK_KP_DOWN).when(keyEvent).getKeyCode();
 
-        userInputArrows.keyPressed(keyEvent);
+        userInputNumPad.keyPressed(keyEvent);
 
         verify(inputActionListener, never()).onDirectionAction(Direction.UP);
         verify(inputActionListener).onDirectionAction(Direction.DOWN);
@@ -55,9 +54,9 @@ public class UserInputArrowsTest {
 
     @Test
     public void pressedRight() {
-        doReturn(KeyEvent.VK_RIGHT).when(keyEvent).getKeyCode();
+        doReturn(KeyEvent.VK_KP_RIGHT).when(keyEvent).getKeyCode();
 
-        userInputArrows.keyPressed(keyEvent);
+        userInputNumPad.keyPressed(keyEvent);
 
         verify(inputActionListener, never()).onDirectionAction(Direction.UP);
         verify(inputActionListener, never()).onDirectionAction(Direction.DOWN);
@@ -68,9 +67,9 @@ public class UserInputArrowsTest {
 
     @Test
     public void pressedLeft() {
-        doReturn(KeyEvent.VK_LEFT).when(keyEvent).getKeyCode();
+        doReturn(KeyEvent.VK_KP_LEFT).when(keyEvent).getKeyCode();
 
-        userInputArrows.keyPressed(keyEvent);
+        userInputNumPad.keyPressed(keyEvent);
 
         verify(inputActionListener, never()).onDirectionAction(Direction.UP);
         verify(inputActionListener, never()).onDirectionAction(Direction.DOWN);
@@ -83,7 +82,7 @@ public class UserInputArrowsTest {
     public void pressedSpace() {
         doReturn(KeyEvent.VK_SPACE).when(keyEvent).getKeyCode();
 
-        userInputArrows.keyPressed(keyEvent);
+        userInputNumPad.keyPressed(keyEvent);
 
         verify(inputActionListener, never()).onDirectionAction(Direction.UP);
         verify(inputActionListener, never()).onDirectionAction(Direction.DOWN);
@@ -91,5 +90,4 @@ public class UserInputArrowsTest {
         verify(inputActionListener, never()).onDirectionAction(Direction.LEFT);
         verify(inputActionListener).onControlAction(ControlAction.PAUSE);
     }
-
 }
