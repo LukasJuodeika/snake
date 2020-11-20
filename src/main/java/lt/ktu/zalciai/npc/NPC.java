@@ -5,11 +5,11 @@ import java.awt.*;
 
 public interface NPC {
 
-    public NPC copy(); 
+    NPC copy();
     
-    public void performAction();
+    void performAction();
 
-    public void move(Point delta);
+    void move(Point delta);
 
-    public Collection<Point> getBodyPoints();
+    Collection<Point> getBodyPoints();
 }

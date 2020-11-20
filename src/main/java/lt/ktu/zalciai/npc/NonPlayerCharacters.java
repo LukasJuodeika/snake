@@ -3,21 +3,20 @@ package lt.ktu.zalciai.npc;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.awt.*;
+import java.util.List;
 
 public class NonPlayerCharacters {
 
-    private ArrayList<NPC> npcs;
+    private List<NPC> npcs = new ArrayList<>();
 
     public NonPlayerCharacters() {
-        npcs = new ArrayList<NPC>();
-        
         SimpleWorm wallWorm = new SimpleWorm(3);
         wallWorm.move(new Point(20, 5));
         SimpleWorm anotherWallWorm = (SimpleWorm) wallWorm.copy();
         anotherWallWorm.move(new Point(10, 0));
 
-        npcs.add((NPC)wallWorm);
-        npcs.add((NPC)new RandomMoveNPC(new RandomStopNPC(new FastNPC(anotherWallWorm))));
+        npcs.add(wallWorm);
+        npcs.add(new RandomMoveNPC(new RandomStopNPC(new FastNPC(anotherWallWorm))));
     }
 
     public Collection<NPC> getNPCs() {
@@ -25,6 +24,6 @@ public class NonPlayerCharacters {
     }
 
     public void performAction() {
-        npcs.stream().forEach(x -> x.performAction());
+        npcs.forEach(NPC::performAction);
     }
 }

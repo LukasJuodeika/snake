@@ -15,7 +15,7 @@ public class RandomMoveNPC extends NPCDecorator {
     public void performAction() {
         super.performAction();
         if (random.nextInt(10) > 2) {
-            super.move(new Point(random.nextInt(2), random.nextInt(2)));
+            move(new Point(random.nextInt(2), random.nextInt(2)));
         }
     }
 }
