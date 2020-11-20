@@ -1,5 +1,6 @@
 package lt.ktu.zalciai.ws;
 
+import lt.ktu.zalciai.display.DisplayViewFactory;
 import lt.ktu.zalciai.food.FoodFactory;
 import lt.ktu.zalciai.food.FoodFactoryClassic;
 import lt.ktu.zalciai.food.FoodFactoryModern;
@@ -32,12 +33,18 @@ public class SnakeClient extends LoggingClient {
 	}
 
 	public static void main(String[] args) throws URISyntaxException {
-		SnakeClient client = new SnakeClient(new URI("ws://localhost:8887"));
+		var client = new SnakeClient(new URI("ws://localhost:8887"));
 		client.connect();
 
-		FoodFactory foodFactory = FoodFactoryModern.getInstance();
-        SnakeMap snakeMap = SnakeMapFactory.createCustomSidesMap(Constants.SNAKE_GRID_WIDTH, Constants.SNAKE_GRID_HEIGHT);
-        SnakeApplication snakeApplication = new SnakeApplication(foodFactory, snakeMap, client);
+		var foodFactory = FoodFactoryModern.getInstance();
+        var snakeMap = SnakeMapFactory.createCustomSidesMap(Constants.SNAKE_GRID_WIDTH, Constants.SNAKE_GRID_HEIGHT);
+        var snakeApplication = new SnakeApplication(
+                foodFactory,
+                snakeMap,
+                client,
+                new DisplayViewFactory(),
+                new Snake()
+        );
         snakeApplication.startGame();
 	}
 }

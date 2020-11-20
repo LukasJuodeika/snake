@@ -4,6 +4,7 @@ import lt.ktu.zalciai.controls.InputActionListener;
 import lt.ktu.zalciai.controls.UserInputWASD;
 import lt.ktu.zalciai.display.DisplayContract;
 import lt.ktu.zalciai.display.DisplayJPanel;
+import lt.ktu.zalciai.display.DisplayViewFactory;
 import lt.ktu.zalciai.enums.ControlAction;
 import lt.ktu.zalciai.enums.Direction;
 import lt.ktu.zalciai.exceptions.CollisionException;
@@ -30,7 +31,7 @@ public class SnakeApplication implements ActionListener, InputActionListener, Sn
 
     private final int FRAME_INTERVAL = 80;
     private Timer timer = new Timer(FRAME_INTERVAL, this);
-    private Snake snake = new Snake();
+    private Snake snake;
     private Direction direction = Direction.DOWN;
     private boolean over = false, paused;
 
@@ -46,17 +47,17 @@ public class SnakeApplication implements ActionListener, InputActionListener, Sn
     public SnakeApplication(
             FoodFactory foodFactory,
             SnakeMap snakeMap,
-            SnakeClient client
+            SnakeClient client,
+            DisplayViewFactory displayViewFactory,
+            Snake snake
     ) {
         this.foodFactory = foodFactory;
         this.snakeMap = snakeMap;
         this.client = client;
         this.remoteMap = new SnakeClientToSnakeMapAdapter(client);
         this.nonPlayerCharacters = new NonPlayerCharacters();
-        view = new DisplayJPanel(
-                new UserInputWASD(this),
-                this
-        );
+        this.view = displayViewFactory.createDisplay(this, this);
+        this.snake = snake;
     }
 
     public void startGame() {
