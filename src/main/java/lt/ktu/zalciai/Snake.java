@@ -70,4 +70,8 @@ public class Snake {
     public void setCollisionStrategy(CollisionStrategy collisionStrategy) {
         this.collisionStrategy = collisionStrategy;
     }
+
+    public int GetScore() {
+        return score;
+    }
 }

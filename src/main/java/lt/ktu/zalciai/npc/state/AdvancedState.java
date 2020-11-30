@@ -1,22 +1,25 @@
-package lt.ktu.zalciai.npc;
+package lt.ktu.zalciai.npc.state;
 
+import lt.ktu.zalciai.npc.*;
+
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.awt.*;
 import java.util.List;
 
-public class NonPlayerCharacters {
+public class AdvancedState implements State {
 
     private List<NPC> npcs = new ArrayList<>();
 
-    public NonPlayerCharacters() {
+    public void doAction(Context context, int score) {
+        context.setState(score < 10 ? this : new HardState());
+    }
+    
+    public AdvancedState() {
         SimpleWorm wallWorm = new SimpleWorm(3);
         wallWorm.move(new Point(20, 5));
-        SimpleWorm anotherWallWorm = (SimpleWorm) wallWorm.copy();
-        anotherWallWorm.move(new Point(10, 0));
 
         npcs.add(wallWorm);
-        npcs.add(new RandomMoveNPC(new RandomStopNPC(new FastNPC(anotherWallWorm))));
     }
 
     public Collection<NPC> getNPCs() {
@@ -26,4 +29,4 @@ public class NonPlayerCharacters {
     public void performAction() {
         npcs.forEach(NPC::performAction);
     }
-}
+ }

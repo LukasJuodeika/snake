@@ -11,7 +11,7 @@ import lt.ktu.zalciai.exceptions.CollisionException;
 import lt.ktu.zalciai.food.FoodFactory;
 import lt.ktu.zalciai.food.entities.Food;
 import lt.ktu.zalciai.npc.NPC;
-import lt.ktu.zalciai.npc.NonPlayerCharacters;
+import lt.ktu.zalciai.npc.state.Context;
 import lt.ktu.zalciai.snakegrid.SnakeGridContract;
 import lt.ktu.zalciai.snakemap.SnakeClientToSnakeMapAdapter;
 import lt.ktu.zalciai.snakemap.SnakeMap;
@@ -42,7 +42,7 @@ public class SnakeApplication implements ActionListener, InputActionListener, Sn
 
     private final SnakeClient client;
     private final SnakeMap remoteMap;
-    private final NonPlayerCharacters nonPlayerCharacters;
+    private final Context npcContext;
 
     public SnakeApplication(
             FoodFactory foodFactory,
@@ -55,7 +55,7 @@ public class SnakeApplication implements ActionListener, InputActionListener, Sn
         this.snakeMap = snakeMap;
         this.client = client;
         this.remoteMap = new SnakeClientToSnakeMapAdapter(client);
-        this.nonPlayerCharacters = new NonPlayerCharacters();
+        this.npcContext = new Context();
         this.view = displayViewFactory.createDisplay(this, this);
         this.snake = snake;
     }
@@ -86,7 +86,8 @@ public class SnakeApplication implements ActionListener, InputActionListener, Sn
             snake.eatFood(food);
             food = foodFactory.generateFood();
         }
-        nonPlayerCharacters.performAction();
+        npcContext.getState().doAction(npcContext, snake.GetScore());
+        npcContext.getState().performAction();
         client.sendPoints(Collections.singletonMap("#ff0000", snake.getPoints()));
         view.refresh();
     }
@@ -126,7 +127,7 @@ public class SnakeApplication implements ActionListener, InputActionListener, Sn
         addToColorPoints(colorPoints, "#000", snakeMap.getWalls());
 
         //draw NPCs
-        for (NPC npc : nonPlayerCharacters.getNPCs()) {
+        for (NPC npc : npcContext.getState().getNPCs()) {
             addToColorPoints(colorPoints, "#000", npc.getBodyPoints());
         }
 
