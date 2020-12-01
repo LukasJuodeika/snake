@@ -10,8 +10,11 @@ import lt.ktu.zalciai.enums.Direction;
 import lt.ktu.zalciai.exceptions.CollisionException;
 import lt.ktu.zalciai.food.FoodFactory;
 import lt.ktu.zalciai.food.entities.Food;
+import lt.ktu.zalciai.food.entities.PowerupCheckpoint;
 import lt.ktu.zalciai.npc.NPC;
+import lt.ktu.zalciai.npc.state.CareTaker;
 import lt.ktu.zalciai.npc.state.Context;
+import lt.ktu.zalciai.npc.state.Originator;
 import lt.ktu.zalciai.snakegrid.SnakeGridContract;
 import lt.ktu.zalciai.snakemap.SnakeClientToSnakeMapAdapter;
 import lt.ktu.zalciai.snakemap.SnakeMap;
@@ -43,6 +46,8 @@ public class SnakeApplication implements ActionListener, InputActionListener, Sn
     private final SnakeClient client;
     private final SnakeMap remoteMap;
     private final Context npcContext;
+    private final Originator originator;
+    private final CareTaker careTaker;
 
     public SnakeApplication(
             FoodFactory foodFactory,
@@ -56,6 +61,8 @@ public class SnakeApplication implements ActionListener, InputActionListener, Sn
         this.client = client;
         this.remoteMap = new SnakeClientToSnakeMapAdapter(client);
         this.npcContext = new Context();
+        this.originator = new Originator();
+        this.careTaker = new CareTaker();
         this.view = displayViewFactory.createDisplay(this, this);
         this.snake = snake;
     }
@@ -86,8 +93,14 @@ public class SnakeApplication implements ActionListener, InputActionListener, Sn
             snake.eatFood(food);
             food = foodFactory.generateFood();
         }
-        npcContext.getState().doAction(npcContext, snake.GetScore());
-        npcContext.getState().performAction();
+        if (food instanceof PowerupCheckpoint) {
+            originator.setState(npcContext.getState());
+            careTaker.add(originator.saveStateToMemento());
+            npcContext.setState(careTaker.getRandom().getState());
+        } else {
+            npcContext.getState().stateAction(npcContext, snake.GetScore());
+        }
+        npcContext.getState().tickAction();
         client.sendPoints(Collections.singletonMap("#ff0000", snake.getPoints()));
         view.refresh();
     }

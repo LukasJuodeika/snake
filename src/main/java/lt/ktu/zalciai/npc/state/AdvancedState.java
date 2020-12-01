@@ -11,7 +11,7 @@ public class AdvancedState implements State {
 
     private List<NPC> npcs = new ArrayList<>();
 
-    public void doAction(Context context, int score) {
+    public void stateAction(Context context, int score) {
         context.setState(score < 10 ? this : new HardState());
     }
     
@@ -26,7 +26,7 @@ public class AdvancedState implements State {
         return npcs;
     }
 
-    public void performAction() {
+    public void tickAction() {
         npcs.forEach(NPC::performAction);
     }
  }

@@ -4,7 +4,7 @@ import lt.ktu.zalciai.npc.*;
 import java.util.Collection;
 
 public interface State {
-    public void doAction(Context context, int score);
+    public void stateAction(Context context, int score);
     public Collection<NPC> getNPCs();
-    public void performAction();
+    public void tickAction();
 }

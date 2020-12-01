@@ -13,7 +13,7 @@ public class PowerupEnemy extends Food {
 
     @Override
     public int getScore() {
-        return 1;
+        return 2;
     }
 
     @Override

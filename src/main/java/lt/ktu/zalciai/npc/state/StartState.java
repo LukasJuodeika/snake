@@ -11,7 +11,7 @@ public class StartState implements State {
 
     private List<NPC> npcs = new ArrayList<>();
 
-    public void doAction(Context context, int score) {
+    public void stateAction(Context context, int score) {
        context.setState(score < 5 ? this : new AdvancedState());
     }
     
@@ -23,7 +23,7 @@ public class StartState implements State {
         return npcs;
     }
 
-    public void performAction() {
+    public void tickAction() {
 
     }
  }

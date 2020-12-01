@@ -6,6 +6,7 @@ import lt.ktu.zalciai.food.entities.FoodBasic;
 import lt.ktu.zalciai.food.entities.PowerupEnemy;
 import lt.ktu.zalciai.food.entities.PowerupWall;
 import lt.ktu.zalciai.food.entities.FoodL1;
+import lt.ktu.zalciai.food.entities.PowerupCheckpoint;
 
 import java.awt.*;
 import java.util.Random;
@@ -44,7 +45,7 @@ public class FoodFactoryModern implements FoodFactory {
                 randomFood = new PowerupEnemy(randomPoint);
                 break;
             default:
-                randomFood = new FoodBasic(randomPoint);
+                randomFood = new PowerupCheckpoint(randomPoint);
                 break;
         }
         return randomFood;

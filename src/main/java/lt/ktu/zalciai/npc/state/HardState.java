@@ -11,7 +11,7 @@ public class HardState implements State {
 
     private List<NPC> npcs = new ArrayList<>();
 
-    public void doAction(Context context, int score) {
+    public void stateAction(Context context, int score) {
         context.setState(score < 15 ? this : new ExtremeState());
     }
     
@@ -32,7 +32,7 @@ public class HardState implements State {
         return npcs;
     }
 
-    public void performAction() {
+    public void tickAction() {
         npcs.forEach(NPC::performAction);
     }
  }
