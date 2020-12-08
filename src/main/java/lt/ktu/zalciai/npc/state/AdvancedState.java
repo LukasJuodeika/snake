@@ -16,10 +16,10 @@ public class AdvancedState implements State {
     }
     
     public AdvancedState() {
-        SimpleWorm wallWorm = new SimpleWorm(3);
+        SimpleWorm wallWorm = new SimpleWorm(10);
         wallWorm.move(new Point(20, 5));
-
-        npcs.add(wallWorm);
+        var comp = new CompositeNPC(wallWorm, 2, new Point(10, 0));
+        npcs.add(comp);
     }
 
     public Collection<NPC> getNPCs() {

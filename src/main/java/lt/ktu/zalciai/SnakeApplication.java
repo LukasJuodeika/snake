@@ -92,13 +92,14 @@ public class SnakeApplication implements ActionListener, InputActionListener, Sn
         if (newHead.equals(food.getPoint())) {
             snake.eatFood(food);
             food = foodFactory.generateFood();
-        }
-        if (food instanceof PowerupCheckpoint) {
-            originator.setState(npcContext.getState());
-            careTaker.add(originator.saveStateToMemento());
-            npcContext.setState(careTaker.getRandom().getState());
-        } else {
-            npcContext.getState().stateAction(npcContext, snake.GetScore());
+
+            if (food instanceof PowerupCheckpoint) {
+                originator.setState(npcContext.getState());
+                careTaker.add(originator.saveStateToMemento());
+                npcContext.setState(careTaker.getRandom().getState());
+            } else {
+                npcContext.getState().stateAction(npcContext, snake.GetScore());
+            }
         }
         npcContext.getState().tickAction();
         client.sendPoints(Collections.singletonMap("#ff0000", snake.getPoints()));
