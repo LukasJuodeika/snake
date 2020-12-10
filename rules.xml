@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         name="PMD rules"
+         xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+         xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd">
+
+    <description>Snake rules</description>
+
+
+    <rule name="DontCallBossShort"
+          language="java"
+          message="Boss wants to talk to you."
+          class="net.sourceforge.pmd.lang.rule.XPathRule" >
+        <description>
+            Variables named x are not allowed in main.
+        </description>
+        <priority>3</priority>
+        <properties>
+            <property name="xpath">
+                <value>
+                    <![CDATA[
+
+//VariableDeclaratorId[@Image = "x" and ../../../../../MethodDeclarator[@Image = "main"]]
+
+]]>
+                </value>
+            </property>
+        </properties>
+    </rule>
+
+</ruleset>

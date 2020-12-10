@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'pmd'
 }
 
 group 'lt.ktu'
@@ -9,6 +10,11 @@ sourceCompatibility = 11
 
 repositories {
     mavenCentral()
+}
+
+pmd {
+    ruleSetFiles = files("rules.xml")
+    ruleSets = []
 }
 
 dependencies {
