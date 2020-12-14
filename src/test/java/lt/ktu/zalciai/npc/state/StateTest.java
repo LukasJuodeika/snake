@@ -2,7 +2,7 @@ package lt.ktu.zalciai.npc.state;
 
 import org.junit.Test;
 
-public class HardStateTest {
+public class StateTest {
 
     @Test
     public void hardStateIterator() {
@@ -22,7 +22,7 @@ public class HardStateTest {
 
     @Test
     public void advancedStateIterator() {
-        var state = new StateTest();
+        var state = new AdvancedState();
         for (var iterator = state.getIterator(); iterator.hasNext();) {
             System.out.println(iterator.next());
         }

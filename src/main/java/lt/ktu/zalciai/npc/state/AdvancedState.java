@@ -6,7 +6,7 @@ import lt.ktu.zalciai.npc.*;
 import java.awt.Point;
 import java.util.*;
 
-public class StateTest implements State, Aggregator<NPC> {
+public class AdvancedState implements State, Aggregator<NPC> {
 
     private List<NPC> npcs = new ArrayList<>();
 
@@ -14,7 +14,7 @@ public class StateTest implements State, Aggregator<NPC> {
         context.setState(score < 10 ? this : new HardState());
     }
 
-    public StateTest() {
+    public AdvancedState() {
         SimpleWorm wallWorm = new SimpleWorm(10);
         wallWorm.move(new Point(20, 5));
         var comp = new CompositeNPC(wallWorm, 2, new Point(10, 0));

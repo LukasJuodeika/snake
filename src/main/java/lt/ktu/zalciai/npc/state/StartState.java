@@ -9,7 +9,7 @@ public class StartState implements State {
     private List<NPC> npcs = new ArrayList<>();
 
     public void stateAction(Context context, int score) {
-       context.setState(score < 5 ? this : new StateTest());
+       context.setState(score < 5 ? this : new AdvancedState());
     }
     
     public StartState() {
