@@ -141,8 +141,8 @@ public class SnakeApplication implements ActionListener, InputActionListener, Sn
         addToColorPoints(colorPoints, "#000", snakeMap.getWalls());
 
         //draw NPCs
-        for (NPC npc : npcContext.getState().getNPCs()) {
-            addToColorPoints(colorPoints, "#000", npc.getBodyPoints());
+        for (var iterator = npcContext.getState().getIterator(); iterator.hasNext();) {
+            addToColorPoints(colorPoints, "#000", iterator.next().getBodyPoints());
         }
 
         //draw remote

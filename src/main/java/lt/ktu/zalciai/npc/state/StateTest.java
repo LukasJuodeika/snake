@@ -1,27 +1,24 @@
 package lt.ktu.zalciai.npc.state;
 
+import lt.ktu.zalciai.Aggregator;
 import lt.ktu.zalciai.npc.*;
 
+import java.awt.Point;
 import java.util.*;
 
-public class StartState implements State {
+public class StateTest implements State, Aggregator<NPC> {
 
     private List<NPC> npcs = new ArrayList<>();
 
     public void stateAction(Context context, int score) {
-       context.setState(score < 5 ? this : new StateTest());
-    }
-    
-    public StartState() {
-
+        context.setState(score < 10 ? this : new HardState());
     }
 
-    public Collection<NPC> getNPCs() {
-        return npcs;
-    }
-
-    public void tickAction() {
-
+    public StateTest() {
+        SimpleWorm wallWorm = new SimpleWorm(10);
+        wallWorm.move(new Point(20, 5));
+        var comp = new CompositeNPC(wallWorm, 2, new Point(10, 0));
+        npcs.add(comp);
     }
 
     @Override
@@ -40,4 +37,8 @@ public class StartState implements State {
             }
         };
     }
- }
+
+    public void tickAction() {
+        npcs.forEach(NPC::performAction);
+    }
+}

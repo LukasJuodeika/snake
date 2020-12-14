@@ -3,13 +3,11 @@ package lt.ktu.zalciai.npc.state;
 import lt.ktu.zalciai.npc.*;
 
 import java.awt.Point;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 public class ExtremeState implements State {
 
-    private List<NPC> npcs = new ArrayList<>();
+    private Queue<NPC> npcs = new LinkedList<>();
 
     public void stateAction(Context context, int score) {
        context.setState(this);	
@@ -31,11 +29,22 @@ public class ExtremeState implements State {
         npcs.add(new RandomMoveNPC(new RandomStopNPC(new FastNPC(worm4))));
     }
 
-    public Collection<NPC> getNPCs() {
-        return npcs;
+    @Override
+    public Iterator<NPC> getIterator() {
+        return new Iterator<>() {
+            private Queue<NPC> npcsCopy = new LinkedList<>(npcs);
+
+            public boolean hasNext() {
+                return npcsCopy.peek() != null;
+            }
+
+            public NPC next() {
+                return npcsCopy.poll();
+            }
+        };
     }
 
     public void tickAction() {
         npcs.forEach(NPC::performAction);
     }
- }
+}

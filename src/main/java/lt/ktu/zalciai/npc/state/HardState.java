@@ -3,18 +3,16 @@ package lt.ktu.zalciai.npc.state;
 import lt.ktu.zalciai.npc.*;
 
 import java.awt.Point;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 public class HardState implements State {
 
-    private List<NPC> npcs = new ArrayList<>();
+    private Set<NPC> npcs = new HashSet<>();
 
     public void stateAction(Context context, int score) {
         context.setState(score < 15 ? this : new ExtremeState());
     }
-    
+
     public HardState() {
         SimpleWorm worm1 = new SimpleWorm(3);
         worm1.move(new Point(20, 5));
@@ -28,11 +26,27 @@ public class HardState implements State {
         npcs.add(new FastNPC(worm3));
     }
 
-    public Collection<NPC> getNPCs() {
-        return npcs;
+    @Override
+    public Iterator<NPC> getIterator() {
+        return new Iterator<>() {
+            private NPC[] npcsArray = npcs.<NPC>toArray(new NPC[10]);
+            private int cursor = 0;
+            private int size = npcs.size();
+
+            public boolean hasNext() {
+                return cursor != size;
+            }
+
+            public NPC next() {
+                if (cursor >= npcs.size())
+                    throw new NoSuchElementException();
+                return npcsArray[cursor++];
+            }
+        };
     }
+
 
     public void tickAction() {
         npcs.forEach(NPC::performAction);
     }
- }
+}
