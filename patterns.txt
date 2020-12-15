@@ -21,7 +21,7 @@ Adapter šablonais.
 + d. Composite – gynimo metu pakeisti realizaciją (visibility arba safetiness), paaiškinti skirtumą nuoDecorator (CompositeNPC.java)
 + e. State – būsenų diagrama – ne mažiau 4 būsenų, paaiškinti skirtumą nuo Strategy,
 f. Proxy – gynimo metu pakeisti realizaciją (security, added functionality, delayed creation). Ataskaitojepateikti šablono veikimo greitaveikos ir atminties naudojimo rezultatus.
-g. Chain Of Responsibility – grandinėlė ne trumpesnė nei iš 4 elementų.
++ g. Chain Of Responsibility – grandinėlė ne trumpesnė nei iš 4 elementų.
 + h. Visitor – ne mažiau 3 visitor klasių.
 i. Interpreter - panaudojimas komandoms per concole.
 j. Mediator – parodyti tarpininkavimą tarp mažiausiai 3 skirtingų klasių, mokėti paaiškinti skirtumą su Observer.

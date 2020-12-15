@@ -1,8 +1,11 @@
 package lt.ktu.zalciai.display;
 
+import lt.ktu.zalciai.controls.AbstractKeyListener;
 import lt.ktu.zalciai.controls.InputActionListener;
 import lt.ktu.zalciai.controls.UserInputWASD;
 import lt.ktu.zalciai.snakegrid.SnakeGridContract;
+
+import java.awt.event.KeyEvent;
 
 public class DisplayViewFactory {
 
@@ -11,7 +14,7 @@ public class DisplayViewFactory {
             SnakeGridContract.Controller snakeGridController
     ) {
         return new DisplayJPanel(
-                new UserInputWASD(inputActionListener),
+                AbstractKeyListener.createListenersChain(inputActionListener),
                 snakeGridController
         );
     }
