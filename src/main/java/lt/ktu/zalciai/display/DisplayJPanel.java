@@ -14,6 +14,7 @@ public class DisplayJPanel implements DisplayContract.View {
     private final SnakeGridView renderPanel;
     private final Dimension dim;
 
+
     public DisplayJPanel(
             KeyListener keyListener,
             SnakeGridContract.Controller controller

@@ -28,7 +28,6 @@ public final class SnakeFat extends Snake {
         Point head = snake.getLast();
         Point next = createNextHead(direction, head);
         if (snake.size() > tailLength) {
-            System.out.println(tailLength);
             snake.remove();
         }
         if (snake.contains(next) || collisionStrategy.colides(next, collides, collidesRemote)) {
@@ -49,7 +48,6 @@ public final class SnakeFat extends Snake {
             Random random = new Random();
             tailLength = random.nextInt(33);
         }
-        System.out.println("Score: " + score);
     }
 
     @Override
