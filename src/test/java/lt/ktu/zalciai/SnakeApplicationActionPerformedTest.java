@@ -21,7 +21,7 @@ import org.mockito.MockitoAnnotations;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
-public class SnakeApplicationActionPerformedTest {
+public class SnakeDefaultApplicationActionPerformedTest {
 
     @Mock
     public FoodFactory foodFactory;
@@ -47,14 +47,14 @@ public class SnakeApplicationActionPerformedTest {
     @Mock
     public Snake snake;
 
-    private SnakeApplication snakeApplication;
+    private SnakeDefaultApplication snakeDefaultApplication;
 
     @Before
     public void setUp() {
         MockitoAnnotations.openMocks(this);
         doReturn(view).when(displayViewFactory).createDisplay(any(), any());
         doReturn(food).when(foodFactory).generateFood();
-        snakeApplication = new SnakeApplication(
+        snakeDefaultApplication = new SnakeDefaultApplication(
                 foodFactory,
                 snakeMap,
                 snakeClient,
@@ -70,9 +70,9 @@ public class SnakeApplicationActionPerformedTest {
         doReturn(headPoint).when(snake).move(any(), any(), any());
         doReturn(foodPoint).when(food).getPoint();
 
-        snakeApplication.startGame();
-        snakeApplication.onControlAction(ControlAction.PAUSE);
-        snakeApplication.actionPerformed(actionEvent);
+        snakeDefaultApplication.startGame();
+        snakeDefaultApplication.onControlAction(ControlAction.PAUSE);
+        snakeDefaultApplication.actionPerformed(actionEvent);
 
         verify(snake, never()).move(any(), any(), any());
         verify(snakeClient, never()).sendPoints(anyMap());
@@ -86,8 +86,8 @@ public class SnakeApplicationActionPerformedTest {
         doThrow(new CollisionException()).when(snake).move(any(), any(), any());
         doReturn(foodPoint).when(food).getPoint();
 
-        snakeApplication.startGame();
-        snakeApplication.actionPerformed(actionEvent);
+        snakeDefaultApplication.startGame();
+        snakeDefaultApplication.actionPerformed(actionEvent);
 
         verify(food, never()).getPoint();
         verify(snake).move(any(), any(), any());
@@ -102,9 +102,9 @@ public class SnakeApplicationActionPerformedTest {
         doThrow(new CollisionException()).when(snake).move(any(), any(), any());
         doReturn(foodPoint).when(food).getPoint();
 
-        snakeApplication.startGame();
-        snakeApplication.actionPerformed(actionEvent);
-        snakeApplication.actionPerformed(actionEvent);
+        snakeDefaultApplication.startGame();
+        snakeDefaultApplication.actionPerformed(actionEvent);
+        snakeDefaultApplication.actionPerformed(actionEvent);
 
         verify(food, never()).getPoint();
         verify(snake, times(1)).move(any(), any(), any());
@@ -119,8 +119,8 @@ public class SnakeApplicationActionPerformedTest {
         doReturn(headPoint).when(snake).move(any(), any(), any());
         doReturn(foodPoint).when(food).getPoint();
 
-        snakeApplication.startGame();
-        snakeApplication.actionPerformed(actionEvent);
+        snakeDefaultApplication.startGame();
+        snakeDefaultApplication.actionPerformed(actionEvent);
 
         verify(snake).move(any(), any(), any());
         verify(snake).eatFood(food);
@@ -136,8 +136,8 @@ public class SnakeApplicationActionPerformedTest {
         doReturn(headPoint).when(snake).move(any(), any(), any());
         doReturn(foodPoint).when(food).getPoint();
 
-        snakeApplication.startGame();
-        snakeApplication.actionPerformed(actionEvent);
+        snakeDefaultApplication.startGame();
+        snakeDefaultApplication.actionPerformed(actionEvent);
 
         verify(snake).move(any(), any(), any());
         verify(snake, never()).eatFood(food);
