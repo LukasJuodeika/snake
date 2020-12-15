@@ -15,6 +15,9 @@ import lt.ktu.zalciai.npc.NPC;
 import lt.ktu.zalciai.npc.state.CareTaker;
 import lt.ktu.zalciai.npc.state.Context;
 import lt.ktu.zalciai.npc.state.Originator;
+import lt.ktu.zalciai.npc.visitor.StateColorfulDisplayVisitor;
+import lt.ktu.zalciai.npc.visitor.StateDisplayVisitor;
+import lt.ktu.zalciai.npc.visitor.StateRandomDisplayVisitor;
 import lt.ktu.zalciai.snakegrid.SnakeGridContract;
 import lt.ktu.zalciai.snakemap.SnakeClientToSnakeMapAdapter;
 import lt.ktu.zalciai.snakemap.SnakeMap;
@@ -48,6 +51,7 @@ public class SnakeApplication implements ActionListener, InputActionListener, Sn
     private final Context npcContext;
     private final Originator originator;
     private final CareTaker careTaker;
+    private final StateDisplayVisitor stateDisplayVisitor;
 
     public SnakeApplication(
             FoodFactory foodFactory,
@@ -63,6 +67,7 @@ public class SnakeApplication implements ActionListener, InputActionListener, Sn
         this.npcContext = new Context();
         this.originator = new Originator();
         this.careTaker = new CareTaker();
+        this.stateDisplayVisitor = new StateRandomDisplayVisitor();
         this.view = displayViewFactory.createDisplay(this, this);
         this.snake = snake;
     }
@@ -142,7 +147,8 @@ public class SnakeApplication implements ActionListener, InputActionListener, Sn
 
         //draw NPCs
         for (var iterator = npcContext.getState().getIterator(); iterator.hasNext();) {
-            addToColorPoints(colorPoints, "#000", iterator.next().getBodyPoints());
+            var color = npcContext.getState().accept(stateDisplayVisitor);
+            addToColorPoints(colorPoints, color, iterator.next().getBodyPoints());
         }
 
         //draw remote

@@ -1,6 +1,7 @@
 package lt.ktu.zalciai.npc.state;
 
 import lt.ktu.zalciai.npc.*;
+import lt.ktu.zalciai.npc.visitor.StateDisplayVisitor;
 
 import java.awt.Point;
 import java.util.*;
@@ -43,6 +44,12 @@ public class ExtremeState implements State {
             }
         };
     }
+
+    @Override
+    public String accept(StateDisplayVisitor visitor)  
+    { 
+        return visitor.visit(this); 
+    } 
 
     public void tickAction() {
         npcs.forEach(NPC::performAction);

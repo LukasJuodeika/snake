@@ -1,6 +1,7 @@
 package lt.ktu.zalciai.npc.state;
 
 import lt.ktu.zalciai.npc.*;
+import lt.ktu.zalciai.npc.visitor.StateDisplayVisitor;
 
 import java.util.*;
 
@@ -40,4 +41,10 @@ public class StartState implements State {
             }
         };
     }
+
+    @Override
+    public String accept(StateDisplayVisitor visitor)  
+    { 
+        return visitor.visit(this); 
+    } 
  }
