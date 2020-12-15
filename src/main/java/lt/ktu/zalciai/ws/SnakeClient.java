@@ -43,7 +43,7 @@ public class SnakeClient extends LoggingClient {
                 snakeMap,
                 client,
                 new DisplayViewFactory(),
-                new Snake()
+                new SnakeFat()
         );
         snakeApplication.startGame();
 	}

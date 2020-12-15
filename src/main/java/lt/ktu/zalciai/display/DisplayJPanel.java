@@ -26,7 +26,7 @@ public class DisplayJPanel implements DisplayContract.View {
 
         dim = Toolkit.getDefaultToolkit().getScreenSize();
         jframe = new JFrame("Snake");
-        jframe.setTitle("Žalčio žaidimas");
+        jframe.setTitle("Žalcio žaidimas");
         jframe.setVisible(true);
         jframe.setSize(Constants.SNAKE_GRID_WIDTH * Constants.SNAKE_GRID_SCALE, Constants.SNAKE_GRID_HEIGHT * Constants.SNAKE_GRID_SCALE + 30);
         jframe.setLocation(dim.width / 2 - jframe.getWidth() / 2, dim.height / 2 - jframe.getHeight() / 2);
