@@ -15,10 +15,8 @@ public class AdvancedState implements State, Aggregator<NPC> {
     }
 
     public AdvancedState() {
-        SimpleWorm wallWorm = new SimpleWorm(10);
-        wallWorm.move(new Point(20, 5));
-        var comp = new CompositeNPC(wallWorm, 2, new Point(10, 0));
-        npcs.add(comp);
+        var factory = CompositeNPCFactory.getInstance();
+        npcs.add(factory.getNPC(10, 2));
     }
 
     @Override

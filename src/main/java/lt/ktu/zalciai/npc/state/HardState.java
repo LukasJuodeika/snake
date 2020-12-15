@@ -24,6 +24,9 @@ public class HardState implements State {
         npcs.add(new FastNPC(worm1));
         npcs.add(new FastNPC(worm2));
         npcs.add(new FastNPC(worm3));
+
+        var factory = CompositeNPCFactory.getInstance();
+        npcs.add(factory.getNPC(10, 2));
     }
 
     @Override
