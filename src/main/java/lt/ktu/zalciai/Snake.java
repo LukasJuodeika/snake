@@ -12,6 +12,13 @@ import java.util.Set;
 import java.util.function.Predicate;
 
 public abstract class Snake {
+    int startX, startY;
+    Direction direction; Predicate<Point> collides; Predicate<Point> collidesRemote;
+    Food food;
+    Point head;
+    CollisionStrategy collisionStrategy;
+    private Object CollisionException;
+
     abstract void start(int startX, int startY);
     abstract Point move(Direction direction, Predicate<Point> collides, Predicate<Point> collidesRemote) throws CollisionException;
     abstract void eatFood(Food food);
@@ -19,4 +26,14 @@ public abstract class Snake {
     abstract LinkedList<Point> getPoints();
     abstract void setCollisionStrategy(CollisionStrategy collisionStrategy);
     abstract int GetScore();
+
+    public final void play() throws CollisionException {
+        start(startX, startY);
+//        move(direction, collides, collidesRemote);
+//        eatFood(food);
+//        createNextHead(direction, head);
+        getPoints();
+        setCollisionStrategy(collisionStrategy);
+        GetScore();
+    }
 }

@@ -76,6 +76,11 @@ public class SnakeApplication implements ActionListener, InputActionListener, Sn
         over = false;
         direction = Direction.DOWN;
         paused = false;
+        try {
+            snake.play();
+        } catch (CollisionException e) {
+            e.printStackTrace();
+        }
         snake.setCollisionStrategy(CollisionStrategy.normal());
         snake.start(15, 15);
         food = foodFactory.generateFood(snakeMap);

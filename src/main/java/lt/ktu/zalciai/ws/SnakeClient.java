@@ -1,6 +1,7 @@
 package lt.ktu.zalciai.ws;
 
 import lt.ktu.zalciai.display.DisplayViewFactory;
+import lt.ktu.zalciai.exceptions.CollisionException;
 import lt.ktu.zalciai.food.FoodFactory;
 import lt.ktu.zalciai.food.FoodFactoryClassic;
 import lt.ktu.zalciai.food.FoodFactoryModern;
@@ -32,7 +33,7 @@ public class SnakeClient extends LoggingClient {
 		send(encodePoints(points));
 	}
 
-	public static void main(String[] args) throws URISyntaxException {
+	public static void main(String[] args) throws URISyntaxException, CollisionException {
 		var client = new SnakeClient(new URI("ws://localhost:8887"));
 		client.connect();
 
