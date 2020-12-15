@@ -9,12 +9,11 @@ import java.awt.*;
 import java.util.LinkedList;
 import java.util.function.Predicate;
 
-public class SnakeDefault extends Snake {
+public final class SnakeDefault extends Snake {
 
     private final LinkedList<Point> snake = new LinkedList<>();
     private int tailLength = 2;
     private int score = 0;
-    private CollisionStrategy collisionStrategy;
 
     @Override
     public void start(int startX, int startY) {
@@ -44,26 +43,6 @@ public class SnakeDefault extends Snake {
         score += food.getScore();
         tailLength++;
         System.out.println("Score: " + score);
-    }
-
-    @Override
-    public Point createNextHead(Direction direction, Point head) {
-        Point next;
-        switch (direction) {
-            case UP:
-                next = new Point(head.x, head.y - 1);
-                break;
-            case DOWN:
-                next = new Point(head.x, head.y + 1);
-                break;
-            case LEFT:
-                next = new Point(head.x - 1, head.y);
-                break;
-            default: //RIGHT
-                next = new Point(head.x + 1, head.y);
-                break;
-        }
-        return next;
     }
 
     @Override
