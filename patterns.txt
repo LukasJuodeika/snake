@@ -15,18 +15,14 @@ l. Bridge – ne mažiau 2 abstrakcijų ir nemažiau 2 konkrečių realizacijų,
 Adapter šablonais.
 
 
-a. Template method – ne mažiau 2 konkrečių klasių (final arba seal).
-b. Iterator – iteruojama (atliekami interfeiso veiksmai) per skirtingas duomenų struktūras – ne mažiau 3
-klasių. (HardState.java ExtremeState.java AdvancedState.java, StartState.java)
-c. Flyweight – Atlikti greitaveikos bei naudojamos atminties matavimus,
-d. Composite – gynimo metu pakeisti realizaciją (visibility arba safetiness), paaiškinti skirtumą nuo
-Decorator (CompositeNPC.java)
-e. State – būsenų diagrama – ne mažiau 4 būsenų, paaiškinti skirtumą nuo Strategy,
-f. Proxy – gynimo metu pakeisti realizaciją (security, added functionality, delayed creation). Ataskaitoje
-pateikti šablono veikimo greitaveikos ir atminties naudojimo rezultatus.
++ a. Template method – ne mažiau 2 konkrečių klasių (final arba seal).
++ b. Iterator – iteruojama (atliekami interfeiso veiksmai) per skirtingas duomenų struktūras – ne mažiau 3klasių. (HardState.java ExtremeState.java AdvancedState.java, StartState.java)
++ c. Flyweight – Atlikti greitaveikos bei naudojamos atminties matavimus,
++ d. Composite – gynimo metu pakeisti realizaciją (visibility arba safetiness), paaiškinti skirtumą nuoDecorator (CompositeNPC.java)
++ e. State – būsenų diagrama – ne mažiau 4 būsenų, paaiškinti skirtumą nuo Strategy,
+f. Proxy – gynimo metu pakeisti realizaciją (security, added functionality, delayed creation). Ataskaitojepateikti šablono veikimo greitaveikos ir atminties naudojimo rezultatus.
 g. Chain Of Responsibility – grandinėlė ne trumpesnė nei iš 4 elementų.
-h. Visitor – ne mažiau 3 visitor klasių.
++ h. Visitor – ne mažiau 3 visitor klasių.
 i. Interpreter - panaudojimas komandoms per concole.
-j. Mediator – parodyti tarpininkavimą tarp mažiausiai 3 skirtingų klasių, mokėti paaiškinti skirtumą su
-Observer.
-k. Memento – Saugus “secure” duomenų atstatymas, kad kitos klasės negautų prieigos prie duomenų.
+j. Mediator – parodyti tarpininkavimą tarp mažiausiai 3 skirtingų klasių, mokėti paaiškinti skirtumą su Observer.
++ k. Memento – Saugus “secure” duomenų atstatymas, kad kitos klasės negautų prieigos prie duomenų.
