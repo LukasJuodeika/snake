@@ -42,7 +42,6 @@ public final class SnakeDefault extends Snake {
         collisionStrategy = food.getStrategy();
         score += food.getScore();
         tailLength++;
-        System.out.println("Score: " + score);
     }
 
     @Override

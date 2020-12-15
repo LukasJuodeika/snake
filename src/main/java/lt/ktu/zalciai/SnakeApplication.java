@@ -53,6 +53,8 @@ public class SnakeApplication implements ActionListener, InputActionListener, Sn
     private final CareTaker careTaker;
     private final StateDisplayVisitor stateDisplayVisitor;
 
+    public String SnakeColor;
+
     public SnakeApplication(
             FoodFactory foodFactory,
             SnakeMap snakeMap,
@@ -106,6 +108,7 @@ public class SnakeApplication implements ActionListener, InputActionListener, Sn
             } else {
                 npcContext.getState().stateAction(npcContext, snake.GetScore());
             }
+            System.out.println(DataCollector.showData(client, snake, food));
         }
         npcContext.getState().tickAction();
         client.sendPoints(Collections.singletonMap("#ff0000", snake.getPoints()));
@@ -138,7 +141,7 @@ public class SnakeApplication implements ActionListener, InputActionListener, Sn
         Map<String, Collection<Point>> colorPoints = new HashMap<>();
 
         //draw snake
-        addToColorPoints(colorPoints, "#FF00FF", snake.getPoints());
+        addToColorPoints(colorPoints, SnakeColor, snake.getPoints());
 
         //draw food
         addToColorPoints(colorPoints, food.getColorHex(), Collections.singletonList(food.getPoint()));

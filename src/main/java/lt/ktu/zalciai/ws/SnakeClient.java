@@ -18,6 +18,16 @@ import java.net.URISyntaxException;
 
 public class SnakeClient extends LoggingClient {
 
+	private Random obj = new Random();
+	private int rand_num = obj.nextInt(0xffffff + 1);
+	// format it as hexadecimal string and print
+	private String colorCode = String.format("#%06x", rand_num);
+
+	public String getColor()
+	{
+		return colorCode;
+	}
+
 	public Map<String, Set<Point>> remoteColorPoints = Collections.emptyMap();
 
 	public SnakeClient(URI serverURI) {
@@ -34,6 +44,13 @@ public class SnakeClient extends LoggingClient {
 	}
 
 	public static void main(String[] args) throws URISyntaxException, CollisionException {
+		//Random color generator
+		Random obj = new Random();
+		int rand_num = obj.nextInt(0xffffff + 1);
+		// format it as hexadecimal string and print
+		String colorCode = String.format("#%06x", rand_num);
+
+
 		var client = new SnakeClient(new URI("ws://localhost:8887"));
 		client.connect();
 
@@ -46,6 +63,8 @@ public class SnakeClient extends LoggingClient {
                 new DisplayViewFactory(),
                 new SnakeFat()
         );
+        snakeApplication.SnakeColor = client.getColor();
         snakeApplication.startGame();
+
 	}
 }
