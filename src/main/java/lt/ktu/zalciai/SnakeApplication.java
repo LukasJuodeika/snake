@@ -78,7 +78,7 @@ public class SnakeApplication implements ActionListener, InputActionListener, Sn
         paused = false;
         snake.setCollisionStrategy(CollisionStrategy.normal());
         snake.start(15, 15);
-        food = foodFactory.generateFood();
+        food = foodFactory.generateFood(snakeMap);
         timer.start();
     }
 
@@ -96,7 +96,7 @@ public class SnakeApplication implements ActionListener, InputActionListener, Sn
         }
         if (newHead.equals(food.getPoint())) {
             snake.eatFood(food);
-            food = foodFactory.generateFood();
+            food = foodFactory.generateFood(snakeMap);
 
             if (food instanceof PowerupCheckpoint) {
                 originator.setState(npcContext.getState());

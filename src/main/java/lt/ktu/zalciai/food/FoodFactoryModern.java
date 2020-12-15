@@ -2,11 +2,10 @@ package lt.ktu.zalciai.food;
 
 import lt.ktu.zalciai.Constants;
 import lt.ktu.zalciai.food.entities.Food;
-import lt.ktu.zalciai.food.entities.FoodBasic;
 import lt.ktu.zalciai.food.entities.PowerupEnemy;
 import lt.ktu.zalciai.food.entities.PowerupWall;
-import lt.ktu.zalciai.food.entities.FoodL1;
 import lt.ktu.zalciai.food.entities.PowerupCheckpoint;
+import lt.ktu.zalciai.snakemap.SnakeMap;
 
 import java.awt.*;
 import java.util.Random;
@@ -29,13 +28,16 @@ public class FoodFactoryModern implements FoodFactory {
     }
 
     @Override
-    public Food generateFood() {
+    public Food generateFood(SnakeMap snakeMap) {
         int classNumber = random.nextInt(3);
         Food randomFood;
-        Point randomPoint = new Point(
-                random.nextInt(Constants.SNAKE_GRID_WIDTH - 1),
-                random.nextInt(Constants.SNAKE_GRID_HEIGHT - 1)
-        );
+        Point randomPoint;
+        do {
+            randomPoint = new Point(
+                    random.nextInt(Constants.SNAKE_GRID_WIDTH - 1),
+                    random.nextInt(Constants.SNAKE_GRID_HEIGHT - 1)
+            );
+        } while (snakeMap.colides(randomPoint));
 
         switch (classNumber) {
             case 0:
